@@ -1,0 +1,178 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine on
+    RewriteBase /
+
+	RewriteRule ^view/wartung?$ index.php?page=_wartung [L]
+    RewriteRule ^404/([A-Za-z0-9-]+)?$ index.php?page=404&key=$1 [NC,L]
+
+	#auth
+	RewriteRule ^login?$ index.php?page=auth_login [L]
+	RewriteRule ^register?$ index.php?page=auth_register [L]
+	RewriteRule ^logout?$ index.php?page=auth_logout [L]
+	RewriteRule ^activate/([A-Za-z0-9-]+)?$ index.php?page=auth_activate&key=$1 [NC,L]
+	RewriteRule ^passwort_reset?$ index.php?page=auth_forgot_password [L]
+    RewriteRule ^passwort_reset/([A-Za-z0-9-]+)?$ index.php?page=auth_forgot_password&key=$1 [NC,L]
+
+	#index
+	RewriteRule ^/?$ index.php?page=dashboard [L]
+    RewriteRule ^dashboard?$ index.php?page=dashboard [L]
+    RewriteRule ^profile?$ index.php?page=profile [L]
+    RewriteRule ^affiliate/mysite?$ index.php?page=aff_site [L]
+    RewriteRule ^s/([A-Za-z0-9-]+)?$ index.php?page=aff_share&id=$1 [NC,L]
+    RewriteRule ^daily?$ index.php?page=daily [L]
+    RewriteRule ^getback?$ index.php?page=getback [L]
+	RewriteRule ^aktuelles?$ index.php?page=aktuelles [L]
+
+    RewriteRule ^server/vweb01?$ index.php?page=server_vweb01 [L]
+
+    RewriteRule ^adventskalender?$ index.php?page=adventskalender [L]
+    RewriteRule ^adventskalender/open/([A-Za-z0-9-]+)?$ index.php?page=adventskalender_open&id=$1 [NC,L]
+
+	#wiki
+	RewriteRule ^wiki?$ index.php?page=wiki_index [L]
+    RewriteRule ^wiki/read/([A-Za-z0-9-]+)?$ index.php?page=wiki_read&id=$1 [L]
+
+    #accounting
+    RewriteRule ^accounting/charge?$ index.php?page=accounting_charge [L]
+    RewriteRule ^d/([A-Za-z0-9-]+)?$ index.php?page=accounting_donate&id=$1 [L]
+    RewriteRule ^accounting/transactions?$ index.php?page=accounting_transactions [L]
+	RewriteRule ^accounting/invoice/([A-Za-z0-9-]+)?$ index.php?page=accounting_invoice&id=$1 [NC,L]
+
+    #support
+    RewriteRule ^tickets?$ index.php?page=tickets [L]
+    RewriteRule ^ticket/([A-Za-z0-9-]+)?$ index.php?page=ticket&id=$1 [NC,L]
+    RewriteRule ^support?$ index.php?page=support [L]
+
+    #webspace
+    RewriteRule ^order/webspace?$ index.php?page=order_webspace [L]
+    RewriteRule ^order/webspace/de?$ index.php?page=order_webspace_nld [L]
+    RewriteRule ^order/webspace/de/angebote?$ index.php?page=order_webspace_nld_bw [L]
+    RewriteRule ^manage/webspace?$ index.php?page=manage_webspaces [L]
+    RewriteRule ^manage/webspace/([A-Za-z0-9-]+)?$ index.php?page=manage_webspace&id=$1 [L]
+    RewriteRule ^renew/webspace/([A-Za-z0-9-]+)?$ index.php?page=renew_webspace&id=$1 [L]
+
+    RewriteRule ^order/webspace/de/jahr?$ index.php?page=order_webspace_nld_jahr [L]
+    RewriteRule ^renew/jahr/webspace/([A-Za-z0-9-]+)?$ index.php?page=renew_webspace_jahr&id=$1 [L]
+
+
+    RewriteRule ^order/webspace/reseller/de?$ index.php?page=order_webspace_resellernld [L]
+    RewriteRule ^manage/reseller/webspace?$ index.php?page=manage_rs_webspaces [L]
+    RewriteRule ^manage/reseller/webspace/([A-Za-z0-9-]+)?$ index.php?page=manage_rs_webspace&id=$1 [L]
+    RewriteRule ^renew/reseller/webspace/([A-Za-z0-9-]+)?$ index.php?page=renew_rs_webspace&id=$1 [L]
+
+    #domains
+    RewriteRule ^order/domain?$ index.php?page=order_domain [L]
+    RewriteRule ^manage/domains?$ index.php?page=manage_domains [L]
+    RewriteRule ^manage/domain/([A-Za-z0-9-]+)?$ index.php?page=manage_domain&id=$1 [L]
+    RewriteRule ^renew/domain/([A-Za-z0-9-]+)?$ index.php?page=renew_domain&id=$1 [L]
+    RewriteRule ^domain/marktplatz?$ index.php?page=domain_marktplatz [L]
+
+    #KMV Rootserver
+    RewriteRule ^order/kvm-ipv6?$ index.php?page=order_kvmipv6 [L]
+    RewriteRule ^manage/kvm-ipv6s?$ index.php?page=manage_kvmipv6s [L]
+    RewriteRule ^manage/kvm-ipv6/([A-Za-z0-9-]+)?$ index.php?page=manage_kvmipv6&id=$1 [L]
+    RewriteRule ^renew/kvm-ipv6/([A-Za-z0-9-]+)?$ index.php?page=renew_kvmipv6&id=$1 [L]
+
+    RewriteRule ^order/kvm?$ index.php?page=order_kvm [L]
+    RewriteRule ^order/kvm-pakete?$ index.php?page=order_kvm_pakete [L]
+    RewriteRule ^manage/kvms?$ index.php?page=manage_kvms [L]
+    RewriteRule ^manage/kvm/([A-Za-z0-9-]+)?$ index.php?page=manage_kvm&id=$1 [L]
+    RewriteRule ^renew/kvm/([A-Za-z0-9-]+)?$ index.php?page=renew_kvm&id=$1 [L]
+
+    #SINUSBOT
+    RewriteRule ^order/sinusbot?$ index.php?page=order_sinusbot [L]
+    RewriteRule ^manage/sinusbot?$ index.php?page=manage_sinusbots [L]
+    RewriteRule ^manage/sinusbot/([A-Za-z0-9-]+)?$ index.php?page=manage_sinusbot&id=$1 [L]
+    RewriteRule ^renew/sinusbot/([A-Za-z0-9-]+)?$ index.php?page=renew_sinusbot&id=$1 [L]
+
+    #gameserver
+    RewriteRule ^order/gameserver?$ index.php?page=order_gameserver [L]
+
+    RewriteRule ^order/gameserver/mc?$ index.php?page=order_gameserver_mc [L]
+    RewriteRule ^manage/gameserver/mc?$ index.php?page=manage_gameservers_mc [L]
+    RewriteRule ^manage/gameserver/mc/([A-Za-z0-9-]+)?$ index.php?page=manage_gameserver_mc&id=$1 [L]
+    RewriteRule ^renew/gameserver/mc/([A-Za-z0-9-]+)?$ index.php?page=renew_gameserver_mc&id=$1 [L]
+
+    RewriteRule ^order/gameserver/mc/curse?$ index.php?page=order_gameserver_mc_curse [L]
+    RewriteRule ^manage/gameserver/curse?$ index.php?page=manage_gameservers_mc_curse [L]
+    RewriteRule ^manage/gameserver/curse/([A-Za-z0-9-]+)?$ index.php?page=manage_gameserver_mc_curse&id=$1 [L]
+    RewriteRule ^renew/gameserver/curse/([A-Za-z0-9-]+)?$ index.php?page=renew_gameserver_mc_curse&id=$1 [L]
+
+    RewriteRule ^order/gameserver/csgo?$ index.php?page=order_gameserver_csgo [L]
+    RewriteRule ^manage/gameserver/csgo?$ index.php?page=manage_gameservers_csgo [L]
+    RewriteRule ^manage/gameserver/csgo/([A-Za-z0-9-]+)?$ index.php?page=manage_gameserver_csgo&id=$1 [L]
+    RewriteRule ^renew/gameserver/csgo/([A-Za-z0-9-]+)?$ index.php?page=renew_gameserver_csgo&id=$1 [L]
+
+    RewriteRule ^order/gamecloud?$ index.php?page=order_gamecloud [L]
+    RewriteRule ^manage/gameclouds?$ index.php?page=manage_gameclouds [L]
+    RewriteRule ^manage/gamecloud/([A-Za-z0-9-]+)?$ index.php?page=manage_gamecloud&id=$1 [L]
+    RewriteRule ^manage/gamecloudadmin/([A-Za-z0-9-]+)?$ index.php?page=manage_gamecloud&id=$1 [L]
+    RewriteRule ^renew/gamecloud/([A-Za-z0-9-]+)?$ index.php?page=renew_gamecloud&id=$1 [L]
+
+    #nextcloud
+    RewriteRule ^order/nextcloud?$ index.php?page=order_nextcloud [L]
+    RewriteRule ^order/nextcloud/pakete?$ index.php?page=order_nextcloud_pakete [L]
+    RewriteRule ^order/nextcloud/konf?$ index.php?page=order_nextcloud_konfigurator [L]
+    RewriteRule ^manage/nextcloud/([A-Za-z0-9-]+)?$ index.php?page=manage_nextcloud&id=$1 [L]
+    RewriteRule ^manage/nextcloud?$ index.php?page=manage_nextclouds [L]
+    RewriteRule ^renew/nextcloud/([A-Za-z0-9-]+)?$ index.php?page=renew_nextcloud&id=$1 [L]
+
+    #marktplatz
+    RewriteRule ^order/marktplatz?$ index.php?page=order_marktplatz [L]
+    RewriteRule ^order/marktplatz/dedicated?$ index.php?page=order_marktplatz_dedicated [L]
+    RewriteRule ^order/marktplatz/dedicated-upgrades?$ index.php?page=order_marktplatz_dedicated_upgrades [L]
+    RewriteRule ^order/marktplatz/kvm?$ index.php?page=order_marktplatz_kvm [L]
+    RewriteRule ^manage/marktplatz/([A-Za-z0-9-]+)?$ index.php?page=manage_marktplatz&id=$1 [L]
+    RewriteRule ^manage/marktplatz?$ index.php?page=manage_marktplatzs [L]
+    RewriteRule ^renew/marktplatz/([A-Za-z0-9-]+)?$ index.php?page=renew_marktplatz&id=$1 [L]
+    RewriteRule ^zusatz/marktplatz/([A-Za-z0-9-]+)?$ index.php?page=zusatz_marktplatz&id=$1 [L]
+	
+    #system
+    RewriteRule ^crone/worker_queue/([A-Za-z0-9-]+)?$ index.php?page=worker_queue&key=$1 [L]
+    RewriteRule ^crone/runtime_queue/([A-Za-z0-9-]+)?$ index.php?page=runtime_queue&key=$1 [L]
+    RewriteRule ^ajax/getload/([A-Za-z0-9-]+)?$ index.php?page=get_load&id=$1 [L]
+    RewriteRule ^crone/traffic_queue/([A-Za-z0-9-]+)?$ index.php?page=traffic_queue&key=$1 [L]
+    RewriteRule ^dsgvo?$ index.php?page=dsgvo [L]
+    RewriteRule ^crone/daily/([A-Za-z0-9-]+)?$ index.php?page=crone_daily&key=$1 [L]
+
+    #debug
+    RewriteRule ^DEBUG?$ index.php?page=DEBUG [L]
+
+    #
+    RewriteRule ^impressum?$ index.php?page=impressum [L]
+    RewriteRule ^datenschutz?$ index.php?page=datenschutz [L]
+    RewriteRule ^agb?$ index.php?page=agb [L]
+
+    #api
+    RewriteRule ^api/v1/discord/([A-Za-z0-9-]+)?$ index.php?page=api_v1_discord&action=$1 [NC,L]
+
+    #team
+    RewriteRule ^team/tickets?$ index.php?page=team_tickets [L]
+    RewriteRule ^team/ticket/([A-Za-z0-9-]+)?$ index.php?page=team_ticket&id=$1 [NC,L]
+    RewriteRule ^team/users?$ index.php?page=team_users [L]
+    RewriteRule ^team/user/([A-Za-z0-9-]+)?$ index.php?page=team_user&id=$1 [NC,L]
+    RewriteRule ^team/spin_login?$ index.php?page=team_spin_login [L]
+    RewriteRule ^team/login_back?$ index.php?page=team_login_back [L]
+    RewriteRule ^team/transactions?$ index.php?page=team_transactions [L]
+    RewriteRule ^team/users/transactions?$ index.php?page=team_user_transactions [L]
+    RewriteRule ^team/system?$ index.php?page=team_system [L]
+    RewriteRule ^team/ipam?$ index.php?page=team_ipam [L]
+    RewriteRule ^team/orders?$ index.php?page=team_orders [L]
+    RewriteRule ^team/order/([A-Za-z0-9-]+)?$ index.php?page=team_order&id=$1 [NC,L]
+    RewriteRule ^team/codes/list?$ index.php?page=team_code_list [L]
+
+    RewriteRule ^team/produkte/webserver?$ index.php?page=team_produkte_webserver [L]
+    RewriteRule ^team/produkte/webserver-rs?$ index.php?page=team_produkte_webserver_rs [L]
+    RewriteRule ^team/produkte/marktplatz?$ index.php?page=team_produkte_marktplatz [L]
+    RewriteRule ^team/produkte/cloudserver?$ index.php?page=team_produkte_cloudserver [L]
+    RewriteRule ^team/produkte/gameserver/mc?$ index.php?page=team_produkte_gameservermc [L]
+    RewriteRule ^team/produkte/kvm/ipv6?$ index.php?page=team_produkte_kvmipv6 [L]
+    RewriteRule ^team/produkte/kvm/server?$ index.php?page=team_produkte_kvmserver [L]
+    RewriteRule ^team/produkte/sinusbot?$ index.php?page=team_produkte_sinusbot [L]
+
+</IfModule>
+<Files 403.shtml>
+    order allow,deny
+    allow from all
+</Files>
