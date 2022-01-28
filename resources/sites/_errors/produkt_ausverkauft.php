@@ -43,7 +43,7 @@ include BASE_PATH.'app/controller/PageController.php';
 								
 
 
-                                <a href="https://cp.black-host.eu" class="btn btn-outline-primary btn-block">
+                                <a href="<?= $helper->url() ?>" class="btn btn-outline-primary btn-block">
 									<b><i class="fas fa-home"></i> Zur Startseite</b>
 								</a>
 

@@ -22,7 +22,7 @@ Leider konnten wir in dieser Kategorie kein Produkt von dir finden.
 <center>
     <div class="col-md-3">
 
-        <a href="https://cp.black-host.eu" class="btn btn-outline-primary btn-block">
+        <a href="<?= $helper->url() ?>" class="btn btn-outline-primary btn-block">
             <b><i class="fas fa-home"></i> Zur Startseite</b>
         </a>
 

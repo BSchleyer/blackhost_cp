@@ -169,7 +169,7 @@ if(isset($_POST['saveCustomName'])){
 		 
 
 										<div class="col-md-6">
-                                            <a href="https://cp.black-host.eu/renew/webspace/<?= $row['id']; ?>" class="btn btn-block btn-outline-success">
+                                            <a href="<?= $helper->url() ?>renew/webspace/<?= $row['id']; ?>" class="btn btn-block btn-outline-success">
                                                 <b><i class="fa fa-calendar-week"></i> Verlängern</b>
                                             </a>
                                         </div>
@@ -182,7 +182,7 @@ if(isset($_POST['saveCustomName'])){
 		 
 
 										<div class="col-md-6">
-                                            <a href="https://cp.black-host.eu/renew/jahr/webspace/<?= $row['id']; ?>" class="btn btn-block btn-outline-success">
+                                            <a href="<?= $helper->url() ?>renew/jahr/webspace/<?= $row['id']; ?>" class="btn btn-block btn-outline-success">
                                                 <b><i class="fa fa-calendar-week"></i> Verlängern</b>
                                             </a>
                                         </div>
