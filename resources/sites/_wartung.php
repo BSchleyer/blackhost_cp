@@ -28,7 +28,7 @@ include BASE_PATH.'app/controller/PageController.php';
 						
 						<br>
 						<p>   
-							<a href="https://cp.black-host.eu/order/webspace" class="btn btn-outline-primary text-uppercase font-weight-bolder pulse-red">Jetzt bestellen</a>   
+							<a href="<?= $helper->url() ?>order/webspace" class="btn btn-outline-primary text-uppercase font-weight-bolder pulse-red">Jetzt bestellen</a>   
 						</p>
 					</div>
 				</div>              
