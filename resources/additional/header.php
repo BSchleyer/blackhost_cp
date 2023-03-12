@@ -1,5 +1,3 @@
-<script src="https://yd6sxh5j0p7q.statuspage.io/embed/script.js"></script>
-
 <div id="kt_header" class="header header-fixed">
     <div class="container-fluid d-flex align-items-stretch justify-content-between">
 		
@@ -9,7 +7,7 @@
                     <li class="menu-item menu-item-submenu menu-item-rel menu-item-active" data-menu-toggle="click" aria-haspopup="true">
                         <font size="3">
                             <!--<b><?= $site->getWelcomeText(date('H')); ?></b>-->
-							Willkommen bei Black-Host.eu <u style="color:<?= env('MAIN_COLOR'); ?>"><b style="color:<?= env('MAIN_COLOR'); ?>">
+							Willkommen bei <?= env('APP_NAME'); ?> <u style="color:<?= env('MAIN_COLOR'); ?>"><b style="color:<?= env('MAIN_COLOR'); ?>">
 							<?= $username ?></b></u>.
 							<br>
                             
@@ -85,45 +83,6 @@
                 </div>
 				
             </div>
-
-            <?php
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://status.black-host.eu/api/v1/alerts',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'GET',
-));
-
-$response = curl_exec($curl);
-curl_close($curl);
-$result = json_decode($response, true);
-
-// view result
-?>
-
-            <div class="topbar-item">
-                <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
-                    <!--<span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                    <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"><?= $username; ?></span>-->
-                    <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary"
-						 data-toggle="tooltip" title="Es gibt eine Statusmeldung">
-
-
-                        <?php if($result !== NULL) { ?>
-                                <i class="fa fa-exclamation-circle text-warning"></i>
-                        <?php } ?>
-
-
-
-                        </div>
-                </div>
-            </div>
         </div>
-
     </div>
 </div>

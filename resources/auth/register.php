@@ -12,14 +12,14 @@ include BASE_PATH.'app/manager/customer/auth/register.php';
             <div class="login-content d-flex flex-column pt-lg-0 pt-12">
 
                 <a href="<?= env('URL'); ?>" class="login-logo pb-xl-20 pb-15">
-                    <img src="https://cdn.black-host.eu/logo/logo-text-primary.png" width="300" alt="" />
+                    <h2><?= env('APP_NAME'); ?></h2>
                 </a>
 
                 <div class="login-form" style="width: 400px;">
 
                     <form class="form" id="kt_login_singin_form" method="post">
                         <div class="pb-5 pb-lg-15">
-                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Willkomme auf Black-Host.eu</h3>
+                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Willkomme bei <?= env('APP_NAME'); ?></h3>
 							<div class="text-muted font-size-h4">
 								Du hast schon einen Account? <a href="<?= env('url'); ?>login" class="text-primary font-weight-bold">Zum Login</a>
 							</div>
@@ -31,23 +31,23 @@ include BASE_PATH.'app/manager/customer/auth/register.php';
 						
 
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">Benutzername</label>
-                            <input value="<?= $_POST['username']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="username" autocomplete="off" />
+                            <label class="font-size-h6 font-weight-bolder">Benutzername</label>
+                            <input value="<?= $_POST['username']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="username" autocomplete="off" />
                         </div>
 
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">E-Mail</label>
-                            <input value="<?= $_POST['email']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="email" autocomplete="off" />
+                            <label class="font-size-h6 font-weight-bolder">E-Mail</label>
+                            <input value="<?= $_POST['email']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="email" autocomplete="off" />
                         </div>
 
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">Passwort</label>
-                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
+                            <label class="font-size-h6 font-weight-bolder">Passwort</label>
+                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="password" name="password" autocomplete="off" />
                         </div>
 
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">Passwort wiederholen</label>
-                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password_repeat" autocomplete="off" />
+                            <label class="font-size-h6 font-weight-bolder">Passwort wiederholen</label>
+                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="password" name="password_repeat" autocomplete="off" />
                         </div>
 
                         <div class="form-group">

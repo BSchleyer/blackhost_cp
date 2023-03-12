@@ -162,7 +162,7 @@ if(isset($_POST['order'])){
 
         if($user->getDataById($userid,'mail_order')){
             include BASE_PATH.'app/notifications/mail_templates/product/order.php';
-            $mail_state = sendMail($mail, $username, $mailContent, $mailSubject);
+            $mail_state = $sendmail->send($mail, $username, $mailContent, $mailSubject);
         }
 
         $_SESSION['success_msg'] = 'Vielen Dank! Dein Produkt wird gleich eingerichtet';

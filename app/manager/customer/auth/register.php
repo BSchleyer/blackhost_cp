@@ -50,7 +50,7 @@ if(isset($_POST['register'])){
     if(empty($error)){
         $verify_code = $helper->generateRandomString(12);
         include BASE_PATH.'app/notifications/mail_templates/auth/confirm_account.php';
-        $mail_state = sendMail($_POST['email'], $_POST['username'], $mailContent, $mailSubject, $emailAltBody);
+        $mail_state = $sendmail->send($_POST['email'], $_POST['username'], $mailContent, $mailSubject);
 
         if($mail_state != true){
             $error = 'Die E-Mail konnte nicht versendet werden';

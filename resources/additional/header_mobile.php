@@ -1,6 +1,6 @@
 <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
     <a href="<?= env('URL'); ?>">
-        <img alt="Logo" src="https://cdn.black-host.eu/logo/logo-text-primary.png" width="125" />
+        <?= env('APP_NAME'); ?>
     </a>
 
     <div class="d-flex align-items-center">

@@ -38,7 +38,7 @@ if(isset($_POST['requestReset'])){
             $setResetKey->execute(array(':user_info' => $user_name, ':very_code' => $verify_code));
 
             include BASE_PATH.'app/notifications/mail_templates/auth/forgot_password.php';
-            sendMail($userInfo['email'], $userInfo['username'], $mailContent, $mailSubject, $emailAltBody);
+            $sendmail->send($userInfo['email'], $userInfo['username'], $mailContent, $mailSubject);
             echo sendSuccess( 'Wir haben dir eine Email zum zurücksetzen gesendet.');
         } else {
             echo sendError( 'Es existiert kein Account mit dieser Email oder diesem Benutzernamen.');

@@ -4,18 +4,7 @@
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
         <a href="<?= env('URL'); ?>" class="brand-logo">
-            <?php if($datasavingmode == 0){ ?>
-
-                <!-- DARKMODE -->
-            <?php if($user->getDataById($userid,'darkmode')){ ?>
-                <img alt="Logo" src="https://cdn.black-host.eu/logo/logo-text-primary.png" width="160">
-            <?php } else { ?>
-                <img alt="Logo" src="https://cdn.black-host.eu/logo/logo-text-primary.png" width="160">
-            <?php } ?>
-
-            <?php } else { ?>
-                <?= env('APP_DOMAIN'); ?>
-            <?php } ?>
+            <?= env('APP_NAME'); ?>
         </a>
 
         <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">

@@ -13,8 +13,6 @@ include_once BASE_PATH.'app/Kernel.php';
 
 include_once BASE_PATH.'app/functions/autoload.php';
 
-include_once BASE_PATH.'app/notifications/sendMail.php';
-
 /*
 |--------------------------------------------------------------------------
 */

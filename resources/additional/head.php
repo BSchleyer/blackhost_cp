@@ -50,7 +50,7 @@ if(isset($_POST['saveSettings'])){
         <meta property="og:description" content="Black-Host.eu ist dein Hosting Unternehmen mit leistungsstarken und trotzdem günstigen Servern. Wir existieren seit dem 08.07.2020 und konnten in dieser Zeit schon über 1.000 Kunden von unseren Angeboten faszinieren. Worauf wartest du also noch?">
         <meta property="og:site_name" content="Black-Host.eu">
         <meta property="og:type" content="website">
-        <meta property="og:image" content="https://black-host.eu/cdn/logos/logo-image-primary.png">
+        <meta property="og:image" content="/">
         <meta property="fb:app_id" content="">
 
         <meta name="theme-color" content="#6254FF">
@@ -103,7 +103,7 @@ if(isset($_POST['saveSettings'])){
 
     <link href="<?= $helper->cdnUrl(); ?>assets/css/themes/layout/header/menu/light.css?v=7.0.4" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="https://cdn.black-host.eu/logo/logo-image-primary.png" />
+    <link rel="shortcut icon" href="/" />
     
     <!-- Fontawesome Stuff -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
@@ -116,10 +116,6 @@ if(isset($_POST['saveSettings'])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
 
 	<!-- Cookie popup -->
-
-	<link rel="stylesheet" type="text/css" href="<?= $helper->cdnUrl(); ?>assets/css/cookie/cookieconsent.min.css"/>
-	<script src="<?= $helper->cdnUrl(); ?>assets/js/cookie/cookieconsent.min.js"></script>
-	<script>window.addEventListener("load", function(){window.wpcc.init({"colors":{"popup":{"background":"#222222","text":"#ffffff","border":"#e6b3b3"},"button":{"background":"#6254FE","text":"#ffffff"}},"position":"bottom-right","corners":"small","content":{"href":"https://black-host.eu/datenschutz","message":"Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen.","link":"Mehr Erfahren","button":"Okay"}})});</script>
 
     <!-- Cookie popup END -->
     
