@@ -41,9 +41,6 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/webserver_de_normal.png" width="100">
-
-                                <br><br>
                                 Pakete (DE)
                                 <br>
                                 <hr>
@@ -67,9 +64,6 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/webserver_de_normal.png" width="100">
-
-                                <br><br>
                                  JahresPakete (DE)
                                 <br>
                                 <hr>
@@ -93,9 +87,6 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/webserver_de_reseller.png" width="100">
-
-                                <br><br>
                                 Reseller (DE)
                                 <br>
                                 <hr>
@@ -119,9 +110,6 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/webserver_de_normal.png" width="100">
-
-                                <br><br>
                                 Angebote (DE)
                                 <br>
                                 <hr>

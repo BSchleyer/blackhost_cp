@@ -63,6 +63,18 @@ class helper extends Controller
         return $response[$data];
     }
 
+    public function getWebspaceType() {
+        $settings = $this->getSetting('webspace_type');
+
+        return $settings;
+    }
+
+    public function getCaptchaType() {
+        $settings = $this->getSetting('captcha');
+
+        return $settings;
+    }
+
     public function human_filesize($bytes, $dec = 2)
     {
         $size   = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');

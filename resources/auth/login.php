@@ -57,11 +57,15 @@ include BASE_PATH . 'app/manager/customer/auth/login.php';
                         <br>
                         <br>
 
-                        <?php if (isset($_COOKIE['7apwy35m2budptd7'])) { ?>
+                        <?php if (isset($_COOKIE['7apwy35m2budptd7'])) {
+                            if($helper->getCaptchaType() == 'hcaptcha') {
+                            ?>
                             <div class="form-group">
                                 <div class="h-captcha" data-sitekey="<?= env('H_CAPTCHA_SITE_KEY'); ?>"></div>
                             </div>
-                        <?php } ?>
+                        <?php } elseif($helper->getCaptchaType() == 'google') { ?>
+
+                        <?php } } ?>
 
                         <div class="pb-lg-0 pb-5">
                             <button type="submit" id="kt_login_singin_form_submit_button"

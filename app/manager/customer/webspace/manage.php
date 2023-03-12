@@ -30,6 +30,12 @@ if($userid != $serverInfos['user_id']){
     die(header('Location: '.$helper->url().'manage/webspace'));
 }
 
-if(isset($_POST['login'])){
-    echo '<script type="text/javascript" language="Javascript">window.open("'.$plesk->generateSession($username.$userid, $user->getIP()).'");</script>';
+if(is_null($user->getDataById($userid, 'keyhelp_uuid'))) {
+    if(isset($_POST['login'])){
+        echo '<script type="text/javascript" language="Javascript">window.open("'.$plesk->generateSession($username.$userid, $user->getIP()).'");</script>';
+    }
+} else {
+    if(isset($_POST['login'])){
+        echo '<script type="text/javascript" language="Javascript">window.open("'.$keyhelp->login($user->getDataById($userid, 'keyhelp_uuid')).'");</script>';
+    }
 }

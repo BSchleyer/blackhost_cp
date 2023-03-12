@@ -21,6 +21,12 @@ if($key == env('CRONE_KEY')){
                 die('worker done webspace '.$row['id']);
             }
 
+            if($payload->action == 'KEYHELP_ORDER'){
+                include BASE_PATH.'app/crone/WORKER/keyhelp_order.php';
+                $worker->success($row['id']);
+                die('worker done webspace '.$row['id']);
+            }
+
             if($payload->action == 'VSERVER_ORDER'){
                 include BASE_PATH.'app/crone/WORKER/vserver_order.php';
                 $worker->success($row['id']);

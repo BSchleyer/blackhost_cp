@@ -12,12 +12,14 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                     <div class="card shadow mb-5">
                         <div class="card-header"><h4>Übersicht</h4></div>
 						<br>
-						<div class="alert alert-primary col-md-12" role="alert" align="center">         
-							Du bist zufrieden mit unseren Dienstleistungen? <u><a href="https://www.trustpilot.com/evaluate/black-host.eu?stars=5" target="_blank" style="color:white;">Bewerte uns doch!</a></u>
-						</div>
                         <div class="card-body">
                             <div class="row">
-								
+
+                                <div class="col-md-12 mb-5">
+                                    <div class="alert alert-primary col-md-12" role="alert" align="center">
+                                        Du bist zufrieden mit unseren Dienstleistungen? <u><a href="https://www.trustpilot.com/evaluate/black-host.eu?stars=5" target="_blank" style="color:white;">Bewerte uns doch!</a></u>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-2">								
 									<h5>Hosting</h5>
@@ -59,7 +61,7 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                                 
                                 <div class="col-md-6">
                                     <p class="text-muted mb-2 font-13">
-                                        <span class="ml-2">WEB-#<?= $serverInfos['webspace_id']; ?></span>
+                                        <span class="ml-2">WEB-#<?= $serverInfos['id']; ?></span>
                                     </p>
                                 </div>
 
@@ -68,12 +70,21 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                                         <strong>Paket Name:</strong>   
                                     </p>
                                 </div>
-                                
-                                <div class="col-md-6">
-                                    <p class="text-muted mb-2 font-13">
-                                        <span class="ml-2"><?= $plesk->getName($serverInfos['plan_id']); ?></span>  
-                                    </p>
-                                </div>
+
+                                <?php if($serverInfos['ftp_name'] == 'nothing') { ?>
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <span class="ml-2"><?= $keyhelp->getName($serverInfos['plan_id']); ?></span>
+                                        </p>
+                                    </div>
+
+                                <?php } else { ?>
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <span class="ml-2"><?= $plesk->getName($serverInfos['plan_id']); ?></span>
+                                        </p>
+                                    </div>
+                                <?php } ?>
 								
 								<!-- -->
 
@@ -81,47 +92,93 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
 									<br>
                                 </div>
 
-                                <div class="col-md-3">								
-									<h5>Plesk Zugänge</h5>
-									<hr>
-                                </div>
+                                <?php if($serverInfos['ftp_name'] == 'nothing') { ?>
 
-                                <div class="col-md-9">								
-                                </div>
+                                    <div class="col-md-3">
+                                        <h5>KeyHelp Zugänge</h5>
+                                        <hr>
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <p class="text-muted mb-2 font-13">
-                                        <strong>Plesk User:</strong>
-                                    </p>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <p class="text-muted mb-2 font-13">
-                                        <span class="ml-2"><?= $user->getDataBySession($_COOKIE['session_token'],'username'); ?><?= $userid; ?></span>
-                                    </p>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <p class="text-muted mb-2 font-13">
-                                        <strong>Plesk Passwort:</strong>  
-                                    </p>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <p class="text-muted mb-2 font-13">
+                                    <div class="col-md-9">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <strong>KeyHelp User:</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <span class="ml-2"><?= $user->getDataBySession($_COOKIE['session_token'],'username'); ?><?= $userid; ?></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <strong>KeyHelp Passwort:</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
                                         <span class="ml-2">
-                                            <span class="noselect" id="plesk_password">*********************************</span>
-                                            <span style="cursor: pointer;" id="plesk_icon" onclick="passwordEye('plesk');">
+                                            <span class="noselect" id="keyhelp_password">*********************************</span>
+                                            <span style="cursor: pointer;" id="keyhelp_icon" onclick="passwordEye('keyhelp');">
                                                 <i class="far fa-eye"></i>
                                             </span>
 
-                                            <i style="cursor: pointer;" class="fas fa-copy copy-btn" data-clipboard-text="<?= $user->getDataBySession($_COOKIE['session_token'],'plesk_password'); ?>" data-toggle="tooltip" title="Passwort kopieren"></i>
+                                            <i style="cursor: pointer;" class="fas fa-copy copy-btn" data-clipboard-text="<?= $user->getDataBySession($_COOKIE['session_token'],'keyhelp_password'); ?>" data-toggle="tooltip" title="Passwort kopieren"></i>
                                         </span>
-                                    </p>
-                                </div>
+                                        </p>
+                                    </div>
+
+                                <?php } else { ?>
+
+                                    <div class="col-md-3">
+                                        <h5>Plesk Zugänge</h5>
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <strong>Plesk User:</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <span class="ml-2"><?= $user->getDataBySession($_COOKIE['session_token'],'username'); ?><?= $userid; ?></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <strong>Plesk Passwort:</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <p class="text-muted mb-2 font-13">
+                                            <span class="ml-2">
+                                                <span class="noselect" id="plesk_password">*********************************</span>
+                                                <span style="cursor: pointer;" id="plesk_icon" onclick="passwordEye('plesk');">
+                                                    <i class="far fa-eye"></i>
+                                                </span>
+
+                                                <i style="cursor: pointer;" class="fas fa-copy copy-btn" data-clipboard-text="<?= $user->getDataBySession($_COOKIE['session_token'],'plesk_password'); ?>" data-toggle="tooltip" title="Passwort kopieren"></i>
+                                            </span>
+                                        </p>
+                                    </div>
+
+                                <?php } ?>
 
 								<!-- -->
 
+                                <?php if($serverInfos['ftp_name'] != 'nothing') { ?>
                                 <div class="col-md-12">
 									<br>
                                 </div>
@@ -164,6 +221,7 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                                         </span>
                                     </p>
                                 </div>
+                                <?php } ?>
 
 								<!-- -->
 
@@ -224,10 +282,10 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                             </form>
 
                             <br>-->
-							
-                            <a class="btn btn-block btn-outline-primary" href="<?= $webhostInfos['domainName']; ?>" target="_blank">
-								<b><i class="fas fa-sign-in-alt"></i> Zum Plesk Login</b>
-							</a>
+
+                            <form method="post">
+                                <button type="submit" class="btn btn-block btn-outline-primary" name="login"><b><i class="fas fa-sign-in-alt"></i> Einloggen</b></button>
+                            </form>
 
                             <br>
                             <a class="btn btn-block btn-outline-success" href="<?= $helper->url(); ?>renew/webspace/<?= $id; ?>">
@@ -235,12 +293,14 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
 							</a>
 							
                             <br><br>
-							
-                            <!--<center>
-                                    <font size="3">
-                                        Bitte beachte, dass der Direkte-Login über ein Pop-Up verläuft, dieses muss vorab erlaubt werden.
-                                    </font>
-                            </center>-->
+
+                            <br><br>
+                            <center>
+                                <font size="3">
+                                    Beachte dass du um den "Einloggen"-Button nutzen zu können,<br>
+                                    Popups für das Kundecenter erlauben musst.
+                                </font>
+                            </center>
 							
                             <br>
                             </div>
@@ -254,6 +314,7 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
 
 <script>
     let plesk = true;
+    let keyhelp = true;
     let ftp = true;
 
     function passwordEye(type) {
@@ -266,6 +327,18 @@ include BASE_PATH.'app/manager/customer/webspace/manage.php';
                 $('#plesk_password').html('*********************************');
                 $('#plesk_icon').html('<i class="far fa-eye"></i>');
                 plesk = true;
+            }
+        }
+
+        if(type == 'keyhelp') {
+            if(keyhelp){
+                $('#keyhelp_password').html("<?= $user->getDataBySession($_COOKIE['session_token'],'keyhelp_password'); ?>");
+                $('#keyhelp_icon').html('<i class="far fa-eye-slash"></i>');
+                keyhelp = false;
+            } else {
+                $('#keyhelp_password').html('*********************************');
+                $('#keyhelp_icon').html('<i class="far fa-eye"></i>');
+                keyhelp = true;
             }
         }
 

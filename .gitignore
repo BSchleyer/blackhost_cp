@@ -1,4 +1,5 @@
 .idea/
-vendor/
-composer.lock
+./composer.lock
 .idea/Black-Host CP.iml
+./vendor
+vendor

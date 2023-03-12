@@ -102,6 +102,20 @@ if(isset($_POST['activateManual'])){
     echo sendSuccess('Die Manuelle Bestellung wurde aktiviert');
 }
 
+if(isset($_POST['setCaptchaType'])) {
+    $SQL = $db->prepare("UPDATE `settings` SET `captcha` = :captcha");
+    $SQL->execute(array(":captcha" => $_POST['captcha']));
+
+    echo sendSuccess('Der Captcha-Typ wurde geändert.');
+}
+
+if(isset($_POST['setWebspaceType'])) {
+    $SQL = $db->prepare("UPDATE `settings` SET `webspace_type` = :webspace_type");
+    $SQL->execute(array(":webspace_type" => $_POST['webspace_type']));
+
+    echo sendSuccess('Der Webspace-Typ wurde geändert.');
+}
+
 ?>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
@@ -197,6 +211,42 @@ if(isset($_POST['activateManual'])){
                                 <input class="form-control" required type="number" name="default_traffic_limit" value="<?= $helper->getSetting('default_traffic_limit'); ?>">
                                 <br>
                                 <button type="submit" class="btn btn-outline-warning btn-block btn-sm" name="setTrafficLimit"><b>Speichern</b></button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-custom card-stretch gutter-b">
+                        <div class="card-body d-flex flex-column">
+
+                            <form method="post">
+                                <label>Captcha-Typ</label>
+                                <select class="form-control" required name="captcha">
+                                    <option <?php if($helper->getSetting('captcha') == 'google'){ echo 'selected'; } ?> value="google">Google reCAPTCHA v2</option>
+                                    <option <?php if($helper->getSetting('captcha') == 'hcaptcha'){ echo 'selected'; } ?> value="hcaptcha">hCaptcha</option>
+                                </select>
+                                <br>
+                                <button type="submit" class="btn btn-outline-warning btn-block btn-sm" name="setCaptchaType"><b>Speichern</b></button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-custom card-stretch gutter-b">
+                        <div class="card-body d-flex flex-column">
+
+                            <form method="post">
+                                <label>Webspace-Typ</label>
+                                <select class="form-control" required name="webspace_type">
+                                    <option <?php if($helper->getSetting('webspace_type') == 'plesk'){ echo 'selected'; } ?> value="plesk">Plesk</option>
+                                    <option <?php if($helper->getSetting('webspace_type') == 'keyhelp'){ echo 'selected'; } ?> value="keyhelp">KeyHelp</option>
+                                </select>
+                                <br>
+                                <button type="submit" class="btn btn-outline-warning btn-block btn-sm" name="setWebspaceType"><b>Speichern</b></button>
                             </form>
 
                         </div>

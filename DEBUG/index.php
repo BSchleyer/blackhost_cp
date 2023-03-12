@@ -18,7 +18,17 @@
 //$response = json_decode($output);
 //dd($response);
 
-dd('hmm was machst du hier?');
+
+
+//$result = $keyhelp->createUser('bjoern', 'bjrnschleyer@gmail.com', 2, 'Björn', 'Schleyer', 'Schleyer-EDV UG', '+4920951307050', 'Sydowstr. 3', 'Gelsenkirchen', '45894', 'Nordrhein-Westfalen', '1234567890');
+
+$result = $keyhelp->getStats('2');
+
+//$result = $keyhelp->unsuspendUser('2');
+//$result = $keyhelp->getHostingPlans();
+dd($result);
+
+//dd('hmm was machst du hier?');
 
 //dd($venocix->createVM('8','8192','150','1','Windows2019.eval'));
 //dd($venocix->getJobInfo('85'));

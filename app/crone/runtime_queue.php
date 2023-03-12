@@ -159,10 +159,19 @@ if($key == env('CRONE_KEY')){
             $SQL = $db->prepare("UPDATE `webspace` SET `state`='suspended' WHERE `id` = :id");
             $SQL->execute(array(":id" => $row['id']));
 
-            try {
-                $plesk->suspend($row['webspace_id']);
-            } catch (Exception $e){
 
+            if($row['ftp_name'] != 'nothing') {
+                try {
+                    $plesk->suspend($row['webspace_id']);
+                } catch (Exception $e){
+
+                }
+            } else {
+                try {
+                    $keyhelp->suspendUser($user->getDataById($row['user_id'], 'keyhelp_uuid'));
+                } catch (Exception $e){
+
+                }
             }
 
 			$discord->callWebhook('<@&874784920332017715> Ein Webserver wurde gesperrt! #'.$row['id']);
@@ -179,10 +188,17 @@ if($key == env('CRONE_KEY')){
             $SQL = $db->prepare("UPDATE `webspace` SET `state`='deleted', `deleted_at` = :deleted_at WHERE `id` = :id");
             $SQL->execute(array(":deleted_at" => $dateTimeNow, ":id" => $row['id']));
 
-            try {
-                $plesk->delete($row['webspace_id']);
-            } catch (Exception $e){
+            if($row['ftp_name'] != 'nothing') {
+                try {
+                    $plesk->delete($row['webspace_id']);
+                } catch (Exception $e){}
+            } else {
+                try {
+                    $keyhelp->deleteUser($user->getDataById($row['user_id'], 'keyhelp_uuid'));
+                } catch (Exception $e){}
 
+                $update = $db->prepare("UPDATE `users` SET `keyhelp_uuid` = NULL, `keyhelp_username` = NULL, `keyhelp_password` = NULL WHERE `id` = :id");
+                $update->execute(array(":id" => $row['user_id']));
             }
 
 			$discord->callWebhook('<@&874784920332017715> Ein Webserver wurde gelöscht! #'.$row['id']);
