@@ -3,3 +3,5 @@
 .idea/Black-Host CP.iml
 ./vendor
 vendor
+composer.lock
+.env
