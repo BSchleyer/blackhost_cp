@@ -720,8 +720,13 @@ CREATE TABLE `settings` (
   `vps` int(11) NOT NULL DEFAULT 1,
   `psc_fees` int(5) NOT NULL DEFAULT 0,
   `default_traffic_limit` int(11) NOT NULL DEFAULT 1000,
-  `rootserver` enum('own','venocix') NOT NULL DEFAULT 'venocix'
+  `rootserver` enum('own','venocix') NOT NULL DEFAULT 'venocix',
+  `captcha` enum('google','hcaptcha') NOT NULL DEFAULT 'hcaptcha',
+  `webspace_type` enum('plesk','keyhelp') NOT NULL DEFAULT 'plesk'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `settings` (`login`, `register`, `webspace`, `teamspeak`, `vps`, `psc_fees`, `default_traffic_limit`, `rootserver`, `captcha`, `webspace_type`) VALUES
+    (1, 0, 1, 1, 1, 0, 1000, 'venocix', 'hcaptcha', 'plesk');
 
 -- --------------------------------------------------------
 
@@ -928,6 +933,9 @@ CREATE TABLE `users` (
   `mail_order` int(11) NOT NULL DEFAULT 1,
   `pterodactyl_id` varchar(255) DEFAULT NULL,
   `pterodactyl_password` varchar(255) DEFAULT NULL,
+  `keyhelp_uuid` varchar(255) DEFAULT NULL,
+  `keyhelp_username` varchar(255) DEFAULT NULL,
+  `keyhelp_password` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
