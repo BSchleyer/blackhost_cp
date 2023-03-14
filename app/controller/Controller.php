@@ -9,6 +9,7 @@ abstract class Controller
     {
         $db = new PDO('mysql:host=' . env('DB_HOST') . ';charset=utf8;dbname=' . env('DB_NAME'), env('DB_USER'), env('DB_PASS'));
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         return $db;
     }
 
