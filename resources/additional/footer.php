@@ -1,17 +1,13 @@
 <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
     <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
         <div class="text-dark order-2 order-md-1">
-			<font style="font-size: 110%;"> Made with <i class="fa fa-heart" style="color:red;"></i> by
-            <a href="" class="text-dark-75 text-hover-primary">Black-Host.eu</a></font>
+			Made with-<i class="fa fa-heart" style="color:red; font-size: 110%;"></i> by <a href="/dashboard" class="text-dark-75 text-hover-primary"><?= env('APP_NAME'); ?></a>
         </div>
         <div class="nav nav-dark">
-            <a target="_blank" href="https://black-host.eu/agb" class="nav-link pl-0 pr-5">AGB</a>
-			<a target="_blank" href="https://black-host.eu/datenschutz" class="nav-link pl-0 pr-5">Datenschutz</a>
-            <a target="_blank" href="https://black-host.eu/impressum" class="nav-link pl-0 pr-0">Impressum</a>
+            <a target="_blank" href="/agb" class="nav-link pl-0 pr-5">AGB</a>
+			<a target="_blank" href="/datenschutz" class="nav-link pl-0 pr-5">Datenschutz</a>
+            <a target="_blank" href="/impressum" class="nav-link pl-0 pr-0">Impressum</a>
         </div>
-
-					<small>* Mit einem Klick auf "Kostenpflichtig bestellen" wird die entsprechende Dienstleistung direkt bestellt und du stimmst
-						den AGB und Datenschutzrichtlienen zu.</small>
 
         <!--NaN-->
 
@@ -51,42 +47,6 @@
         </svg>
         <!--end::Svg Icon-->
     </span>
-</div>
-
-<div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
-    <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-        <h3 class="font-weight-bold m-0">Statusmeldungen</h3>
-        <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
-            <i class="ki ki-close icon-xs text-muted"></i>
-        </a>
-    </div>
-    <div class="offcanvas-content pr-5 mr-n5">
-
-        <form method="post">
-            <div class="row noselect">
-
-                <label class="col-9 col-form-label" align="center">
-                    <span class="svg-icon svg-icon-primary svg-icon-2x">
-
-                    </span>
-
-                    <center>
-                    <i class="fa fa-exclamation-circle text-warning"></i> <?php echo($result["data"][0]["title"]); ?> |
-                   </center>
-                </label>
-
-                <hr>
-
-
-                <div class="col-12">
-                    <a href="https://status.black-host.eu/" target="_blank" class="btn btn-transparent-primary btn-block btn-sm"><b>Zum Serverstatus</b></a>
-                </div>
-
-            </div>
-        </form>
-
-
-    </div>
 </div>
 
 <script>var HOST_URL = "<?= env('URL'); ?>";</script>

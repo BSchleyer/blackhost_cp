@@ -39,7 +39,7 @@ include BASE_PATH.'app/manager/customer/payment/check_payments.php';
                             <?php } ?>
 
                             <?php if(is_null($user->getDataById($userid,'projectlogo'))){ ?>
-                                <img src="https://black-host.eu/cdn/logos/logo-text-primary.png" width="350">
+                                <img src="<?= $helper->picUrl(); ?>logo-text-primary.png" width="350">
                             <?php } ?>
 
                             <?php if(is_null($user->getDataById($userid,'projectname'))){ ?>

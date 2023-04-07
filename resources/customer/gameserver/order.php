@@ -12,7 +12,7 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/gameserver_mc_logo_konf.png" width="100">
+								<img src="" width="100">
 
                                 <br><br>
                                 Minecraft Gameserver
@@ -64,7 +64,7 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/csgo_logo_konf.png" width="110">
+								<img src="" width="110">
 
                                 <br><br>
                                 CSGO Server
@@ -90,7 +90,7 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/gta_logo_konf.png" width="108">
+								<img src="" width="108">
 
                                 <br><br>
                                 GTA Server

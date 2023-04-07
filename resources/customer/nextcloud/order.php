@@ -12,7 +12,7 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/cloudserver_de_konfig.png" width="100">
+								<img src="" width="100">
 
                                 <br><br>
                                 Pakete (DE)
@@ -38,7 +38,7 @@ include BASE_PATH.'app/controller/PageController.php';
                     <div class="card shadow mb-5">
                         <div class="card-body" style="text-align: center;">
                             <h3 class="mb-0">
-								<img src="https://data.black-host.eu/share/cloudserver_de_normal.png" width="108">
+								<img src="" width="108">
 
                                 <br><br>
                                 Konfigurator (DE)

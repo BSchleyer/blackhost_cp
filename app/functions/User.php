@@ -1,7 +1,6 @@
 <?php
 
 $user = new User();
-
 class User extends Controller
 {
 
@@ -129,6 +128,15 @@ class User extends Controller
     {
         $SQL = self::db()->prepare("SELECT * FROM `users` WHERE `email` = :email");
         $SQL->execute(array(":email" => $email));
+        $response = $SQL->fetch(PDO::FETCH_ASSOC);
+
+        return $response[$data];
+    }
+
+    public function getDataByLogin($userdata, $data)
+    {
+        $SQL = self::db()->prepare("SELECT * FROM `users` WHERE `email` = :userdata OR `username` = :userdata");
+        $SQL->execute(array(":userdata" => $userdata));
         $response = $SQL->fetch(PDO::FETCH_ASSOC);
 
         return $response[$data];

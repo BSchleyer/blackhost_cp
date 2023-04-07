@@ -17,9 +17,12 @@ if(isset($_POST['login'])){
         $error = 'Bitte gib ein Passwort an';
     }
 
-    if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL) == false){
+    /*
+     * for email validation
+     *
+     * if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL) == false){
         $error = 'Bitte gib eine gültige E-Mail an';
-    }
+    }*/
 
     if(!$user->verifyLogin($_POST['email'], $_POST['password'])){
         $error = 'Das angegebene Passwort stimmt nicht';
@@ -46,7 +49,7 @@ if(isset($_POST['login'])){
 
     if(empty($error)){
 
-        if($user->getDataByEmail($_POST['email'],'legal_accepted') == 1 || $_POST['legal_accepted'] == 1){
+        if($user->getDataByLogin($_POST['email'],'legal_accepted') == 1 || $_POST['legal_accepted'] == 1){
 
             if($_POST['legal_accepted'] == 1){
                 $SQL = $db->prepare("UPDATE `users` SET `legal_accepted` = :legal_accepted WHERE `email` = :email");
@@ -56,7 +59,7 @@ if(isset($_POST['login'])){
             $SQL = $db->prepare("UPDATE `users` SET `user_addr` = :user_addr WHERE `email` = :email");
             $SQL->execute(array(":user_addr" => $user->getIP(), ":email" => $_POST['email']));
 
-            $userid = $user->getDataByEmail($_POST['email'], 'id');
+            $userid = $user->getDataByLogin($_POST['email'], 'id');
 
             $user->logLogin($userid, $user->getIP(), $user->getAgent());
 

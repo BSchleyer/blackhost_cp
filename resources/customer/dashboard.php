@@ -11,89 +11,6 @@ if(isset($_POST['renewPin'])){
 
 //echo sendSweetInfo('test');
 
-if(isset($_POST['useCode'])){
-	$codeerror = false;
-
-
-    // gucken ob code genutzt
-    $SQL2 = $db->prepare("SELECT * from `code_used` WHERE `code` = :code AND `user_id` = :userid");
-    $code = $_POST['code'];
-    $SQL2->execute(array(":code" => $code, ":userid" => $userid));
-	while ($rowused = $SQL2 -> fetch(PDO::FETCH_ASSOC)){
-
-	if($rowused['id'] !== ""){
-		
-			$codeerror = true;
-		    echo sendError('Du hast den Code bereits eingelöst');
-
-	}
-		
-	}
-    // gucken ob code genutzt [ENDE]
-
-    // gucken ob code noch nutzbar ist
-    $SQL4 = $db->prepare("SELECT * from `codes` WHERE `code` = :code");
-    $code = $_POST['code'];
-    $SQL4->execute(array(":code" => $code));
-	while ($rowhow = $SQL4 -> fetch(PDO::FETCH_ASSOC)){
-
-	if($rowhow['useable'] == "0"){
-		
-			$codeerror = true;
-		    echo sendError('Der Code wurde bereits zu oft verwendet.');
-
-	}
-		
-	}
-    // gucken ob code noch nutzbar ist [ENDE]
-
-    $SQL = $db->prepare("SELECT * from `codes` WHERE `code` = :code");
-    $code = $_POST['code'];
-	$proname = "Gutschein";
-    $SQL->execute(array(":code" => $code));
-	while ($row = $SQL -> fetch(PDO::FETCH_ASSOC)){
-
-	$price = $row['amount'];
-
-		
-		// error check
-	if($codeerror == false){
-
-		// Code gefunden
-
-	if($row['code'] == $code){
-		
-		$user->addMoney($price, $userid);
-        $user->addTransaction($userid,'+'.$price,$proname.' eingelöst');
-
-        $SQL1 = $db->prepare("INSERT INTO `code_used`(`code`, `user_id`) VALUES ('$code','$userid')");
-        $SQL1->execute(array(":code" => $code, ":userid" => $userid));
-
-    
-		$SQL3 = $db->prepare("UPDATE `codes` SET `useable` = :newcode WHERE `id` = :codeid");
-        $codeid = $row['id'];
-		$newcode = $row['useable'] -1;
-		$SQL3->execute(array(":codeid" => $codeid, ":newcode" => $newcode));
-
-		echo sendSuccess('Der Code wurde eingelöst');
-		header("Refresh:2");
-
-	}
-	
-
-
-	} // error check
-	
-} // select * from code
-
-	if($SQL->rowCount() == 0){
-
-		    echo sendError('Der Code wurde nicht gefunden');
-
-	}
-
-} // gutschein POST ende
-
 ?>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
@@ -109,9 +26,9 @@ if(isset($_POST['useCode'])){
                 if ($SQL->rowCount() != 0) {
                 ?>
 
-<div class="alert alert-warning col-md-12" role="alert">
-	Du hast eine Antwort, auf eines deiner Tickets! <a href="tickets">Zu den Tickets</a>
-</div>
+                    <div class="alert alert-warning col-md-12" role="alert">
+                        Du hast eine Antwort, auf eines deiner Tickets! <a href="tickets">Zu den Tickets</a>
+                    </div>
 
                 <?php } ?>
 
@@ -262,44 +179,27 @@ if(isset($_POST['useCode'])){
 
 
             <div class="row">
-
-                <div class="col-md-6">
-                    <form method="post">
-                    <div class="card" style="border-radius: 15px 10px;">
-                        <div class="card-header border-0 pt-5" style="margin-bottom: -30px;">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label font-weight-bolder text-dark">Gutschein-Code einlösen</span>
-                            </h3>
-                        </div>
-                            <div class="card-body">
-                                <input class="form-control" name="code" rows="1">
-                                <br>
-                                <button type="submit" name="useCode" class="btn btn-outline-primary btn-block"><b><i class="fas fa-terminal"></i> Gutschein einlösen</b></button><!-- <br> -->
-                            </div>
-                        </div>
-                    </form><br>
-                </div>
-
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <?php
                     if(isset($_POST['saveNotes'])){
-                        $SQL = $db->prepare("UPDATE `users` SET `notes` = :notes WHERE `id` = :id");
-                        $SQL->execute(array(":notes" => $_POST['notes'], ":id" => $userid));
+                        $notes = $helper->xssFix($_POST['notes']);
 
-                        $notes = $_POST['notes'];
+                        $SQL = $db->prepare("UPDATE `users` SET `notes` = :notes WHERE `id` = :id");
+                        $SQL->execute(array(":notes" => $notes, ":id" => $userid));
 
                         echo sendSuccess('Notizen wurden gespeichert');
                     }
                     ?>
                     <form method="post">
                         <div class="card" style="border-radius: 15px 10px;">
-                        <div class="card-header border-0 pt-5" style="margin-bottom: -30px;">
-                            <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label font-weight-bolder text-dark">Notizen</span>
-                            </h3>
-                        </div>
+                            <div class="card-header">
+                                <h4 class="card-title" style="margin-bottom: 0px;">
+                                    Notizen
+                                </h4>
+                            </div>
+
                             <div class="card-body">
-                                <textarea class="form-control" name="notes" rows="5"><?= $helper->xssFix($notes); ?></textarea>
+                                <textarea class="form-control" name="notes" rows="5" style="resize: none !important;"><?= $helper->xssFix($notes); ?></textarea>
                                 <br>
                                 <button type="submit" name="saveNotes" class="btn btn-outline-primary btn-block"><b><i class="fas fa-save"></i> Speichern</b></button>
                             </div>

@@ -127,6 +127,35 @@ if(isset($_POST['saveMailSettings'])){
 
 }
 
+if(isset($_POST['useCode'])){
+
+    $error = null;
+
+    if(empty($_POST['code'])) {
+        $error = 'Bitte gebe einen Gutscheincode ein!';
+    }
+
+    if(empty($error)) {
+        $code = $helper->xssFix($_POST['code']);
+        $usage = $voucher_code->getUsed($_POST['code'], $userid);
+
+        if($voucher_code->getUsed($code, $userid) != 1) {
+            $result = $voucher_code->useCode($code, $userid);
+
+            if($result) {
+                echo sendSuccess('Wir haben dir die Gutschrift erteilt.');
+            } else {
+                echo sendError('Der Code kann nicht genutzt werden.');
+            }
+        } else {
+            echo sendError('Du hast den Code bereits benutzt.');
+        }
+    } else {
+        echo sendError($error);
+    }
+
+} // gutschein POST ende
+
 ?>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -294,9 +323,13 @@ if(isset($_POST['saveMailSettings'])){
                                 $SQL = $db -> prepare("SELECT * FROM `login_logs` WHERE `user_id` = :user_id AND `show` = '1'");
                                 $SQL->execute(array(":user_id" => $userid));
                                 if ($SQL->rowCount() != 0) {
-                                while ($row = $SQL -> fetch(PDO::FETCH_ASSOC)){ ?>
+                                while ($row = $SQL -> fetch(PDO::FETCH_ASSOC)){
+                                    $ip = preg_replace('~(\d+)\.(\d+)\.(\d+)\.(\d+)~', "$1.$2.$3.XXX", $row['user_addr']);
+                                    $ip6 = preg_replace('~(\d+)\.(\d+)\.(\d+)\.(\d+)\.(\d+)\.(\d+)\.(\d+)~', "$1.$2.$3.$4.$5.$6.$7.XXX", $row['user_addr']);
+
+                                    ?>
                                     <tr>
-                                        <td><?= $row['user_addr']; ?></td>
+                                        <td><?php if($ip) { echo $ip; } elseif($ipv6) { echo $ip6; } ?></td>
                                         <td><?= $user->getOS($row['user_agent']); ?></td>
                                         <td><?= $helper->formatDate($row['created_at']); ?></td>
                                     </tr>
@@ -306,6 +339,22 @@ if(isset($_POST['saveMailSettings'])){
 
                         </div>
                     </div>
+
+                    <form method="post">
+                        <div class="card" style="border-radius: 15px 10px;">
+                            <div class="card-header">
+                                <h4 class="card-title" style="margin-bottom: 0px;">
+                                    Gutschein-Code einlösen
+                                </h4>
+                            </div>
+
+                            <div class="card-body">
+                                <input class="form-control" name="code">
+                                <br>
+                                <button type="submit" name="useCode" class="btn btn-outline-primary btn-block"><b><i class="fas fa-terminal"></i> Gutschein einlösen</b></button>
+                            </div>
+                        </div>
+                    </form>
 
                     <!--<div class="card shadow mb-5">
                         <div class="card-header">

@@ -48,8 +48,10 @@ if(isset($_POST['order'])){
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 
-        $user->removeMoney($priceSetup, $userid);
-        $user->addTransaction($userid,'-'.$priceSetup,$proname.' Einrichtungsgebühr');
+        if($priceSetup != 0.00) {
+            $user->removeMoney($priceSetup, $userid);
+            $user->addTransaction($userid,'-'.$priceSetup,$proname.' Einrichtungsgebühr');
+        }
 		
         $discord->callWebhook('<@&874784920332017715> Soeben wurde ein neuer Marktplatz-Paket bestellt von '.$username);
 

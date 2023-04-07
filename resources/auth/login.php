@@ -22,30 +22,24 @@ include BASE_PATH . 'app/manager/customer/auth/login.php';
 
                     <form class="form" id="kt_login_singin_form" method="post">
                         <div class="pb-5 pb-lg-15">
-                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Willkommen zurück
-                                👋</h3>
+                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">
+                                Willkommen zurück 👋</h3>
                             <div class="text-muted font-size-h4">
-                                Du hast noch keinen Account? <a href="<?= env('url'); ?>register"
-                                                                class="text-primary font-weight-bold">Zur Erstellung</a>
+                                Du hast noch keinen Account? <a href="<?= env('url'); ?>register" class="text-primary font-weight-bold">Zur Erstellung</a>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">E-Mail</label>
-                            <input value="<?= $_POST['email']; ?>"
-                                   class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
-                                   type="email" name="email" autocomplete="off"/>
+                            <label class="font-size-h6 font-weight-bolder text-dark">Benutzername / E-Mail</label>
+                            <input value="<?= $_POST['email']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="email" autocomplete="off"/>
                         </div>
 
                         <div class="form-group">
                             <div class="d-flex justify-content-between mt-n5">
                                 <label class="font-size-h6 font-weight-bolder text-dark pt-5">Passwort</label>
-                                <a href="<?= env('URL'); ?>passwort_reset"
-                                   class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Passwort
-                                    vergessen?</a>
+                                <a href="<?= env('URL'); ?>passwort_reset" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Passwort vergessen?</a>
                             </div>
-                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
-                                   type="password" name="password" autocomplete="off"/>
+                            <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off"/>
                         </div>
 
                         <label for="stayLogged" class="checkbox noselect">
@@ -68,9 +62,7 @@ include BASE_PATH . 'app/manager/customer/auth/login.php';
                         <?php } } ?>
 
                         <div class="pb-lg-0 pb-5">
-                            <button type="submit" id="kt_login_singin_form_submit_button"
-                                    class="btn btn-outline-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
-                                    name="login">Einloggen
+                            <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-outline-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3" name="login">Einloggen
                             </button>
                         </div>
                     </form>

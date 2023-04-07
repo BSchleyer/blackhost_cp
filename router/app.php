@@ -102,15 +102,15 @@ if(isset($_GET['page'])) {
         //gameserver
         case "order_gameserver": include($customer . "gameserver/order.php");  break;
 
-        case "order_gameserver_mc": include($customer . "gameserver/order_mc.php");  break;
-        case "manage_gameservers_mc": include($customer . "gameserver/index_mc.php");  break;
-        case "manage_gameserver_mc": include($customer . "gameserver/manage_mc.php");  break;
-        case "renew_gameserver_mc": include($customer . "gameserver/renew_mc.php");  break;
+        case "order_gameserver_mc": include($customer . "gameserver/minecraft/order.php");  break;
+        case "manage_gameservers_mc": include($customer . "gameserver/minecraft/index.php");  break;
+        case "manage_gameserver_mc": include($customer . "gameserver/minecraft/manage.php");  break;
+        case "renew_gameserver_mc": include($customer . "gameserver/minecraft/renew.php");  break;
 
-        case "order_gameserver_csgo": include($customer . "gameserver/order_csgo.php");  break;
-        case "manage_gameservers_csgo": include($customer . "gameserver/index_csgo.php");  break;
-        case "manage_gameserver_csgo": include($customer . "gameserver/manage_csgo.php");  break;
-        case "renew_gameserver_csgo": include($customer . "gameserver/renew_csgo.php");  break;
+        case "order_gameserver_csgo": include($customer . "gameserver/csgo/order.php");  break;
+        case "manage_gameservers_csgo": include($customer . "gameserver/csgo/index.php");  break;
+        case "manage_gameserver_csgo": include($customer . "gameserver/csgo/manage.php");  break;
+        case "renew_gameserver_csgo": include($customer . "gameserver/csgo/renew.php");  break;
 
         case "order_gamecloud": include($customer . "gamecloud/order.php");  break;
         case "manage_gameclouds": include($customer . "gamecloud/index.php");  break;

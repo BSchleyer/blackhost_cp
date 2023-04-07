@@ -138,7 +138,7 @@ $response = $pterodactyl->createCSGO('CSGO Server', $user->getDataById($userid, 
 
         $SQL->execute(array($userid, $cpu, $gs_ram, $gs_disk, $gs_backups, $gs_host, $state, $expire_at, $price, json_encode($response)));
 		
-		include BASE_PATH.'app/manager/customer/gameserver/functions/createMC.php';
+		include BASE_PATH . 'app/manager/customer/gameserver/functions/createMC.php';
 		sleep(4);
 
         $user->removeMoney($price, $userid);

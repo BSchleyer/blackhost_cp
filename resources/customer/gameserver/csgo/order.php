@@ -1,32 +1,10 @@
 <?php
-$currPage = 'front_MC Gameserver Bestellen';
+$currPage = 'front_CSGO Gameserver Bestellen';
 include BASE_PATH.'app/controller/PageController.php';
-include BASE_PATH.'app/manager/customer/gameserver/order_mc.php';
-include BASE_PATH.'app/manager/customer/gameserver/order_mc_reseller.php';
-$reseller = false;
-
-
-if($username = "Simba1"){
-
-$reseller = false;
-
-$ram_limit = 64000;
-$cpu_limit = 32000;
-$speicher_limit = 200000;
-
-    $SQLCHECK = $db->prepare("SELECT * from `gameserver_mc` WHERE `user_id` = :userid");
-    $SQLCHECK->execute(array(":userid" => $userid));
-	while ($checker = $SQLCHECK -> fetch(PDO::FETCH_ASSOC)){
-	
-	$ramused = $checker['gs_ram'];
-		
-	}
-	
-}
-
+    include BASE_PATH . 'app/manager/customer/gameserver/csgo/order.php';
 
     // rabatt [START]
-    $SQL50 = $db->prepare("SELECT * from `produkt_rabatt` WHERE `produkt` = 'gameserver'");
+    $SQL50 = $db->prepare("SELECT * from `produkt_rabatt` WHERE `produkt` = 'csgo'");
     $SQL50->execute();
 	while ($rowrabatt = $SQL50 -> fetch(PDO::FETCH_ASSOC)){
 
@@ -121,7 +99,7 @@ if(isset($_POST['useCode'])){
                                     $SQL2->execute(array(":option_id" => '21'));
 
                                     $SQL3 = $db->prepare("SELECT * FROM `product_option_entries` WHERE `option_id` = :option_id AND `disabled` = '0'");
-                                    $SQL3->execute(array(":option_id" => '22'));
+                                    $SQL3->execute(array(":option_id" => '25'));
 	
 	                         ?>
 
@@ -143,12 +121,11 @@ if(isset($_POST['useCode'])){
 					?>
                     <?php } ?>
 
-
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
 
         <div class="text-center" style="margin-top: 1px; margin-bottom: 30px;">
-            <h1 style="font-size: 70px;">Unsere <b style="color: <?= env('MAIN_COLOR'); ?>">MC</b> Gameserver</h1>
+            <h1 style="font-size: 70px;">Unsere <b style="color: <?= env('MAIN_COLOR'); ?>">CSGO</b> Gameserver</h1>
         </div>
 
 
@@ -158,7 +135,7 @@ if(isset($_POST['useCode'])){
 
                 <div class="col-md-9">
                     <div class="card" style="border-radius: 15px 10px;">
-                        <div class="card-header"><h1>Deutschland, Minecraft Gameserver</h1>
+                        <div class="card-header"><h1>Deutschland, CSGO Gameserver</h1>
 					
 
 							<?php if($mainrabatt > 0){ ?>
@@ -178,17 +155,6 @@ if(isset($_POST['useCode'])){
 			        </div>
                     <?php } ?>
 
-			        <?php if($reseller == true){ ?>
-			        <div class="alert alert-primary col-md-12" role="alert">
-				       Du bist gerade als Reseller angemeldet.
-						
-						<br>
-						<br>
-						
-						Genutzter RAM: <?= $ramused; ?>
-			        </div>
-                    <?php } ?>
-
 						<hr>
 
 							<h5>Max. Konfiguration</h5>
@@ -205,7 +171,7 @@ if(isset($_POST['useCode'])){
 
 							<span class="svg-icon svg-icon-primary svg-icon-1x">
 							<i class="fa fa-hdd" style="color: <?= env('MAIN_COLOR'); ?>"></i>
-							  </span> bis zu <b>100</b> GB SSD NVMe Speicher
+							  </span> bis zu <b>100</b> GB HDD Speicher
 							<br>
 
 							<br>
@@ -218,7 +184,7 @@ if(isset($_POST['useCode'])){
 
 							<span class="svg-icon svg-icon-primary svg-icon-1x">
 							<i class="fa fa-building" style="color: <?= env('MAIN_COLOR'); ?>"></i>
-							  </span> Standort: Deutschland
+							  </span> Standort: Deutschland <span class="badge badge-success">NEU</span>
 							<br>
 
 							<span class="svg-icon svg-icon-primary svg-icon-1x">
@@ -232,6 +198,7 @@ if(isset($_POST['useCode'])){
 							<i class=" fa fa-question-circle" style="color: <?= env('MAIN_COLOR'); ?>" data-toggle="tooltip" title="" 
 							   data-original-title="Wir bieten einen eigenen DDoS-Schutz inkl. Filter mit bis zu
 													800 GBIT/s Schutz."></i>
+
 							<br>
 
 							<span class="svg-icon svg-icon-primary svg-icon-1x">
@@ -239,16 +206,13 @@ if(isset($_POST['useCode'])){
 							  </span> Einrichtung in unter 10 Sekunden
 							<br>
 
-							<span class="svg-icon svg-icon-primary svg-icon-1x">
-							<i class="fa fa-cube" style="color: <?= env('MAIN_COLOR'); ?>"></i>
-							  </span> Modpack Installer (500+ Mods) <span class="badge badge-success">NEU</span>
 							<br>
+							<h5>Hinweis</h5>
 
 							<span class="svg-icon svg-icon-primary svg-icon-1x">
-							<i class="fa fa-cube" style="color: <?= env('MAIN_COLOR'); ?>"></i>
-							  </span> Plugin Installer (1000+ Plugins) <span class="badge badge-success">NEU</span>
+							<i class="fa fa-exclamation-triangle" style="color: <?= env('MAIN_COLOR'); ?>"></i>
+							  </span> Wir garantieren keine flüssige Nutzung, sofern die Empfehlungen nicht beachtet werden
 							<br>
-
 
 						
 						</div>
@@ -257,6 +221,7 @@ if(isset($_POST['useCode'])){
 
                                 <i class="fas fa-microchip" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
 								<b><label style="font-weight: bold;" for="cores">Kerne</label></b>
+								<span class="badge badge-primary">2 vKerne werden empfohlen</span>
 								<!--<span class="badge badge-warning">Teils nicht verfügbar</span>-->
                                 <select class="form-control" id="cores" name="cores">
                                     <?php
@@ -270,6 +235,7 @@ if(isset($_POST['useCode'])){
                                 <br>
                                 <i class="fas fa-memory" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
 								<b><label style="font-weight: bold;" for="memory">Arbeitsspeicher</label></b>
+								<span class="badge badge-primary">5 GB RAM werden empfohlen</span>
 								<!--<span class="badge badge-warning">Teils nicht verfügbar</span>-->
                                 <select class="form-control" id="memory" name="memory">
                                     <?php
@@ -287,63 +253,17 @@ if(isset($_POST['useCode'])){
                                 <select class="form-control" id="disk" name="disk">
                                     <?php
                                     $SQL = $db->prepare("SELECT * FROM `product_option_entries` WHERE `option_id` = :option_id");
-                                    $SQL->execute(array(":option_id" => '22'));
+                                    $SQL->execute(array(":option_id" => '25'));
                                     if ($SQL->rowCount() != 0) { while ($row = $SQL->fetch(PDO::FETCH_ASSOC)) { ?>
 									<?php include 'option.php'; ?>
                                     <?php } } ?>
                                 </select>
-
-                                <!--<br>
-                                <i class="fas fa-cloud-upload-alt" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
-								<b><label style="font-weight: bold;" for="backups">Externe Backups</label></b>
-                                <select class="form-control" id="backups" name="backups">
-                                    <?php
-                                    $SQL = $db->prepare("SELECT * FROM `product_option_entries` WHERE `option_id` = :option_id");
-                                    $SQL->execute(array(":option_id" => '23'));
-                                    if ($SQL->rowCount() != 0) { while ($row = $SQL->fetch(PDO::FETCH_ASSOC)) { ?>
-									<?php include 'option.php'; ?>
-                                    <?php } } ?>
-                                </select>-->
-
-                                <br>
-                                <i class="fas fa-database" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
-								<b><label style="font-weight: bold;" for="databases">Datenbanken</label></b>
-								<!--<span class="badge badge-warning">Teils nicht verfügbar</span>-->
-                                <select class="form-control" id="databases" name="databases">
-                                    <?php
-                                    $SQL = $db->prepare("SELECT * FROM `product_option_entries` WHERE `option_id` = :option_id");
-                                    $SQL->execute(array(":option_id" => '24'));
-                                    if ($SQL->rowCount() != 0) { while ($row = $SQL->fetch(PDO::FETCH_ASSOC)) { ?>
-									<?php include 'option.php'; ?>
-                                    <?php } } ?>
-                                </select>
-
-                                <br>
-                                <i class="fa fa-briefcase" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
-								<b><label style="font-weight: bold;">Minecraft Edition</label></b>
-                                <select class="form-control" name="version">
-                                    <option data-price="0.00" value="14">Vanilla Minecraft (+ 0.00€)</option>
-                                    <option data-price="0.00" value="8">Paper (+ 0.00€)</option>
-                                </select>
-
-								<span class="badge badge-primary">Nachträglich installierbar</span> Bungeecord, Craftbukkit, Fabric, Forge, Paper, Purpur, Spigot, SpongeVanilla, Tuinity, Vanilla (+ Snapshots), Velocity und Waterfall 
-							<br>
 
                                 <br>
                                 <i class="fa fa-copy" style="color: <?= env('MAIN_COLOR'); ?>"></i> 
-								<b><label style="font-weight: bold;">Minecraft Version</label></b>
-                                <select class="form-control" name="version_build">
-                                    <option data-price="0.00" value="1.8">1.8 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.9">1.9 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.10">1.10 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.10.2">1.10.2 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.12">1.12 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.13">1.13 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.14">1.14 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.15">1.15 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.16">1.16 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.17.1">1.17.1 (+ 0.00€)</option>
-                                    <option data-price="0.00" value="1.18">1.18 (+ 0.00€)</option>
+								<b><label style="font-weight: bold;">Version</label></b>
+                                <select class="form-control" name="version">
+                                    <option data-price="0.00" value="7">Counter-Strike: Global Offensive  (+ 0.00€)</option>
                                 </select>
 
 								<input hidden name="codeprice" id="codeprice" value="<?= $codeprice; ?>">
@@ -376,15 +296,7 @@ if(isset($_POST['useCode'])){
                                     </select>
                                 </div>
 
-			        <?php if($reseller == true){ ?>
-                                <input hidden value="" name="orderRes">
-                    <?php } ?>
-
-
-			        <?php if($reseller == false){ ?>
                                 <input hidden value="" name="order">
-                    <?php } ?>
-								
                                 <input hidden value="2" name="server_id">
 
                                 <label for="agb" class="checkbox noselect">
@@ -475,22 +387,6 @@ if(isset($_POST['useCode'])){
 										
                            <?php } ?>
 
-			        <?php if($reseller == true){ ?>
-
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <b class="mb-0">
-                                        Reseller kosten:
-                                    </b>
-                                </div>
-                                <div class="col-auto">
-                                    <a class="text-muted">
-										<span>0.00€</span>
-                                    </a>
-                                </div>
-                            </div>
-                    <?php } ?>
-
 							<?php if($mainrabatt > 0){ ?>
 
                             <div class="row align-items-center">
@@ -501,7 +397,7 @@ if(isset($_POST['useCode'])){
                                 </div>
                                 <div class="col-auto">
                                     <a class="text-muted">
-                                        <span style="color:red;"><?= $mainrabatt ?>%</span>
+                                        <span style="color:red;">-<?= $mainrabatt ?>%</span>
                                     </a>
                                 </div>
                             </div>
@@ -510,6 +406,7 @@ if(isset($_POST['useCode'])){
                                 <div class="col">
                                     <b class="mb-0">
                                         Monatlicher Betrag:
+
                                     </b>
                                 </div>
                                 <div class="col-auto">
@@ -555,7 +452,6 @@ if(isset($_POST['useCode'])){
                             <a onclick="orderNow();" id="orderBtn" class="btn btn-block btn-outline-primary mb-4 pulse-red">
                                 <i class="fas fa-shopping-cart"></i> <b>Kostenpflichtig bestellen</b>
                             </a>
-
                     <?php } ?>
 
 			        <?php if($order == false){ ?>
@@ -576,20 +472,11 @@ if(isset($_POST['useCode'])){
                     </div>
                 </div>
 
-
-
                 <script>
 
                     function orderNow() {
                         document.getElementById("orderForm").submit();
                         const button = document.getElementById('orderBtn');
-                        button.disabled = true;
-                        button.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Installation erfolgt ...';
-                    }
-
-                    function orderRsNow() {
-                        document.getElementById("orderForm").submit();
-                        const button = document.getElementById('orderRsBtn');
                         button.disabled = true;
                         button.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Installation erfolgt ...';
                     }
@@ -601,7 +488,6 @@ if(isset($_POST['useCode'])){
                     {
                         sum = parseFloat($("#cores").find("option:selected").data("price"))
                             +parseFloat($("#memory").find("option:selected").data("price"))
-                            +parseFloat($("#databases").find("option:selected").data("price"))
                             +parseFloat($("#disk").find("option:selected").data("price"));
                         var price = Number(sum * $("#duration").find("option:selected").data("factor")).toFixed(2);
 						var codeprice = <?php echo json_encode($codeprice); ?>;
@@ -621,7 +507,7 @@ if(isset($_POST['useCode'])){
                         update();
                     });
                 </script>
-
+				
             </div>
         </div>
     </div>

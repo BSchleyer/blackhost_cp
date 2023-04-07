@@ -98,7 +98,7 @@ if(isset($_POST['saveSettings'])){
     <?php } ?>
     <!-- DARKMODE END -->
 
-    <script src="https://www.hcaptcha.com/1/api.js" async defer></script>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <link href="<?= $helper->cdnUrl(); ?>assets/css/global.css" rel="stylesheet" type="text/css" />
 
     <link href="<?= $helper->cdnUrl(); ?>assets/css/themes/layout/header/menu/light.css?v=7.0.4" rel="stylesheet" type="text/css" />
