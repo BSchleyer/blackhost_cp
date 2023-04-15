@@ -1176,6 +1176,7 @@ CREATE TABLE `webspace_host` (
 CREATE TABLE `webspace_packs` (
   `id` int(11) NOT NULL,
   `plesk_id` varchar(255) NOT NULL,
+  `keyhelp_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `desc` text DEFAULT NULL,
   `price` decimal(12,2) NOT NULL,
