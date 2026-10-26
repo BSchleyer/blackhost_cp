@@ -49,8 +49,23 @@ if(isset($_POST['orderRes'])){
 	$version = $_POST['version'];
 	$version_build = $_POST['version_build'];
 	$databases = $_POST['databases'];
-	$mainrabatt_script = $_POST['mainrabatt_script'];
+	$mainrabatt_script = $site->getProduktRabatt('gameserver');
 
+
+    if(!in_array((string)$version, array('14', '8'), true)){
+        $error = 'Ungültige Minecraft Edition';
+    }
+    if(!is_string($version_build) || !preg_match('/^[0-9]{1,2}(\.[0-9]{1,2}){1,2}$/', $version_build)){
+        $error = 'Ungültige Minecraft Version';
+    }
+    foreach(array($cpu, $memory, $disk, $backups, $databases) as $limitValue){
+        if(!is_string($limitValue) || !ctype_digit($limitValue)){
+            $error = 'Ungültige Ressourcenangabe';
+        }
+    }
+    if(!ctype_digit((string)$cpu) || (int)$cpu < 1 || (int)$memory < 1 || (int)$disk < 1){
+        $error = 'Ungültige Ressourcenangabe';
+    }
 
     $db_price = 0;
 	$pricere1 = 0;
@@ -128,6 +143,7 @@ $response = $pterodactyl->create('game.host-control.eu', $id, $version, $limits,
 		include BASE_PATH.'app/manager/customer/gameserver/functions/createMC.php';
 		sleep(4);
 
+        unset($_SESSION['codeprice']['gameserver']);
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 		

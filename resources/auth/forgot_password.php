@@ -25,7 +25,7 @@ include BASE_PATH.'app/manager/customer/auth/forgot_password.php';
 								Keine Sorge, wir helfen!
 							</div>
                             </div>
-                            <input name="key" hidden="hidden" value="<?= $_GET['key']; ?>">
+                            <input name="key" hidden="hidden" value="<?= htmlspecialchars($_GET['key'], ENT_QUOTES, "UTF-8"); ?>">
                             <div class="form-group">
                                 <label class="font-size-h6 font-weight-bolder text-dark">Passwort</label>
                                 <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="new_password" autocomplete="off" />

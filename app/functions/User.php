@@ -224,23 +224,23 @@ class User extends Controller
     }
 
     public function addMoney($money, $user_id){
-        $SQL = self::db()->prepare("SELECT * FROM `users` WHERE `id` = :id");
-        $SQL->execute(array(':id' => $user_id));
-        $userData = $SQL -> fetch(PDO::FETCH_ASSOC);
-
-        $newUserMoney = $userData['amount'] + $money;
-        $updateUserMoney = self::db()->prepare("UPDATE `users` SET `amount`=:newUserMoney WHERE `id` = :user_id");
-        $updateUserMoney->execute(array(":newUserMoney" => $newUserMoney, ":user_id" => $user_id));
+        $SQL = self::db()->prepare("UPDATE `users` SET `amount` = `amount` + :money WHERE `id` = :user_id");
+        $SQL->execute(array(":money" => $money, ":user_id" => $user_id));
     }
 
     public function removeMoney($price, $user_id){
-        $SQL = self::db()->prepare("SELECT * FROM `users` WHERE `id` = :id");
-        $SQL->execute(array(':id' => $user_id));
-        $userData = $SQL -> fetch(PDO::FETCH_ASSOC);
+        $SQL = self::db()->prepare("UPDATE `users` SET `amount` = `amount` - :money WHERE `id` = :user_id");
+        $SQL->execute(array(":money" => $price, ":user_id" => $user_id));
+    }
 
-        $newUserMoney = $userData['amount'] - $price;
-        $updateUserMoney = self::db()->prepare("UPDATE `users` SET `amount`=:newUserMoney WHERE `id` = :user_id");
-        $updateUserMoney->execute(array(":newUserMoney" => $newUserMoney, ":user_id" => $user_id));
+    // Zieht den Betrag nur ab, wenn das Guthaben reicht (atomar). Gibt true bei Erfolg zurueck.
+    public function tryRemoveMoney($price, $user_id){
+        if (!is_numeric($price) || $price < 0) {
+            return false;
+        }
+        $SQL = self::db()->prepare("UPDATE `users` SET `amount` = `amount` - :money WHERE `id` = :user_id AND `amount` >= :money2");
+        $SQL->execute(array(":money" => $price, ":money2" => $price, ":user_id" => $user_id));
+        return $SQL->rowCount() == 1;
     }
 
     public function addTransaction($user_id, $amount, $desc){

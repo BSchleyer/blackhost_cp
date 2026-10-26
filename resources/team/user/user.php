@@ -10,6 +10,23 @@ $userInfos = $SQL -> fetch(PDO::FETCH_ASSOC);
 
 $id = $userInfos['id'];
 
+/*
+ * only admins may change roles/balance, and only admins may touch team accounts
+ */
+$callerIsAdmin = $user->isAdmin($_COOKIE['session_token']);
+if(!$callerIsAdmin){
+    $restricted = array('setRole', 'addMoney', 'removeMoney');
+    if(in_array($userInfos['role'], array('admin', 'support'))){
+        $restricted = array_merge($restricted, array('changePassword', 'changeEmail', 'setState', 'saveReason'));
+    }
+    foreach($restricted as $action){
+        if(isset($_POST[$action])){
+            unset($_POST[$action]);
+            echo sendError('Dafür hast du keine Berechtigung');
+        }
+    }
+}
+
 if(isset($_POST['login'])){
 
     if($user->getDataById($id,'role') == 'admin' || $user->getDataById($id,'role') == 'support'){
@@ -17,8 +34,8 @@ if(isset($_POST['login'])){
     }
 
     if(empty($error)){
-        setcookie('old_session_token', $_COOKIE['session_token'],time()+864000,'/');
-        setcookie('session_token', $userInfos['session_token'],time()+864000,'/');
+        setcookie('old_session_token', $_COOKIE['session_token'], array('expires' => time()+864000, 'path' => '/', 'httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])));
+        setcookie('session_token', $userInfos['session_token'], array('expires' => time()+864000, 'path' => '/', 'httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])));
         die(header('Location: '.$helper->url()));
     } else {
         echo sendError($error);
@@ -127,6 +144,10 @@ if(isset($_POST['addMoney'])){
 
 if(isset($_POST['setRole'])){
     $error = null;
+
+    if(!in_array($_POST['role'], array('customer', 'support', 'admin'), true)){
+        $error = 'Ungültige Rolle';
+    }
 
     if(empty($error)){
         $SQL = $db->prepare("UPDATE `users` SET `role` = :role WHERE `id` = :id");

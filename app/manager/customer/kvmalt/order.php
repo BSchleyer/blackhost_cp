@@ -60,9 +60,10 @@ if(isset($_POST['order'])){
         +$site->getProductOptionEntrie('3', $disk,'price')
         +$site->getProductOptionEntrie('4', $addresses,'price');
     $price = $db_price * $validate->getIntervalFactor($runtime);
-    $price = number_format($price,2) - $_POST['codeprice'];
+    $codeprice = isset($_SESSION['codeprice']['kvmalt']) ? max(0, (float)$_SESSION['codeprice']['kvmalt']) : 0;
+    $price = round($price,2) - $codeprice;
 
-    if($price < $_POST['codeprice']){
+    if($price < $codeprice){
         $error = 'Der Gutscheincode entspricht einem zu hohen Wert';
         $_SESSION['error_msg'] = 'Der Gutscheincode entspricht einem zu hohen Wert';
         header('Location: '.env('URL').'dashboard');
@@ -119,6 +120,7 @@ if(isset($_POST['order'])){
 		include BASE_PATH.'app/manager/customer/kvm/functions/createVm.php';
 		sleep(4);
 
+        unset($_SESSION['codeprice']['kvmalt']);
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 		

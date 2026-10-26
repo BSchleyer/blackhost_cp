@@ -52,7 +52,7 @@ if(isset($_POST['order'])){
     $ipv4 = $_POST['ipv4'];
     $ipv6 = $_POST['ipv6'];
     $installos = $_POST['installos'];
-	$mainrabatt_script = $_POST['mainrabatt_script'];
+	$mainrabatt_script = $site->getProduktRabatt('ipv6');
     //$runtime = $_POST['duration'];
 
     $db_price = $site->getProductOptionEntrie('53', $cores,'price')
@@ -61,11 +61,12 @@ if(isset($_POST['order'])){
         +$site->getProductOptionEntrie('51', $ipv6,'price')
         +$site->getProductOptionEntrie('50', $ipv4,'price');
 	$pricere1 = $db_price * $validate->getIntervalFactor($runtime) * $mainrabatt_script;
-    $price = $db_price * $validate->getIntervalFactor($runtime) - $pricere1 - $_POST['codeprice'];
+    $codeprice = isset($_SESSION['codeprice']['ipv6']) ? max(0, (float)$_SESSION['codeprice']['ipv6']) : 0;
+    $price = $db_price * $validate->getIntervalFactor($runtime) - $pricere1 - $codeprice;
 	
-    $price = number_format($price,2);
+    $price = round($price,2);
 
-    if($price < $_POST['codeprice']){
+    if($price < $codeprice){
         $error = 'Der Gutscheincode entspricht einem zu hohen Wert';
         $_SESSION['error_msg'] = 'Der Gutscheincode entspricht einem zu hohen Wert';
         header('Location: '.env('URL').'dashboard');
@@ -123,6 +124,7 @@ if(isset($_POST['order'])){
 		include BASE_PATH.'app/manager/customer/kvm-ipv6/_createVM.php';
 		sleep(4);
 
+        unset($_SESSION['codeprice']['ipv6']);
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 		

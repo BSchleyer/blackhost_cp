@@ -65,9 +65,9 @@ if(isset($_POST['login'])){
 
             $sessionId = $user->generateSessionToken($_POST['email']);
             if(isset($_POST['stayLogged'])){
-                setcookie('session_token', $sessionId,time()+'864000','/');
+                setcookie('session_token', $sessionId, array('expires' => time()+864000, 'path' => '/', 'httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])));
             } else {
-                setcookie('session_token', $sessionId,time()+'86400','/');
+                setcookie('session_token', $sessionId, array('expires' => time()+86400, 'path' => '/', 'httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])));
             }
             $_SESSION['success_msg'] = 'Login Erfolgreich, Willkommen!';
 //          echo sendSuccess('Login erfolgreich. Du wirst gleich weitergeleitet');

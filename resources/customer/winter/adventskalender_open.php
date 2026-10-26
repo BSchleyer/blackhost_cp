@@ -10,6 +10,11 @@ $siteid = $helper->protect($_GET['id']);
                 $SQL2->execute(array(":siteid" => $siteid, ":datenow" => $dateTimeNow));
 
 
+                // Pro Nutzer und Törchen serialisieren, damit parallele Requests nicht doppelt einloesen
+                $lockName = 'advent_'.md5($siteid.'_'.$userid);
+                $lockSQL = $db->prepare("SELECT GET_LOCK(:name, 10)");
+                $lockSQL->execute(array(":name" => $lockName));
+
                 $SQL3 = $db->prepare("SELECT * FROM `adventskalender_used` WHERE `tor`= :siteid AND `userid` = :userid");
                 $SQL3->execute(array(":siteid" => $siteid, ":userid" => $userid));
                 if ($SQL->rowCount() != 0) {
@@ -55,6 +60,9 @@ $siteid = $helper->protect($_GET['id']);
 			} // if sql3
 
 			} // if sql2
+
+			$unlockSQL = $db->prepare("SELECT RELEASE_LOCK(:name)");
+			$unlockSQL->execute(array(":name" => $lockName));
 
 ?>
 

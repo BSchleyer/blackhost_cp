@@ -6,6 +6,10 @@ $SQLGetServerInfos = $db->prepare("SELECT * FROM `vm_servers` WHERE `id` = :id")
 $SQLGetServerInfos -> execute(array(":id" => $id));
 $serverInfos = $SQLGetServerInfos -> fetch(PDO::FETCH_ASSOC);
 
+if($userid != $serverInfos['user_id']){
+    die(header('Location: '.$helper->url().'manage/vserver'));
+}
+
 if(!($serverInfos['deleted_at'] == NULL)){
     header('Location: '.$helper->url().'order/vserver');
     die();
@@ -69,10 +73,6 @@ if($serverInfos['state'] == 'SUSPENDED'){
     die(header('Location: '.$helper->url().'renew/vserver/'.$id));
 } else {
     $suspended = false;
-}
-
-if($userid != $serverInfos['user_id']){
-    die(header('Location: '.$helper->url().'manage/vserver'));
 }
 
 $status = $lxc->getStatus($serverInfos['node_id'], $serverInfos['id']);
@@ -393,7 +393,7 @@ if(isset($_POST['saveRDNS'])){
         $error = 'Es wurde kein rDNS eintrag gefunden';
     }
 
-    if(!filter_var($_POST['rdns'], FILTER_VALIDATE_DOMAIN)) {
+    if(!filter_var($_POST['rdns'], FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
         $error = 'rDNS Eintgrag ist ungültig';
     }
 

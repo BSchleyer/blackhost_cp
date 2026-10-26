@@ -29,9 +29,10 @@ for ($i = 0, $z = strlen($a = '1234567890')-1, $b = $a{rand(0,$z)}, $i = 1; $i !
 
     $db_price = $site->getProductOptionEntrie('30', $nc_speicher,'price');
     $price = $db_price * $validate->getIntervalFactor($runtime);
-    $price = number_format($price,2) - $_POST['codeprice'];
+    $codeprice = isset($_SESSION['codeprice']['nextcloud']) ? max(0, (float)$_SESSION['codeprice']['nextcloud']) : 0;
+    $price = round($price,2) - $codeprice;
 
-    if($price < $_POST['codeprice']){
+    if($price < $codeprice){
         $error = 'Der Gutscheincode entspricht einem zu hohen Wert';
         $_SESSION['error_msg'] = 'Der Gutscheincode entspricht einem zu hohen Wert';
         header('Location: '.env('URL').'dashboard');
@@ -90,6 +91,7 @@ for ($i = 0, $z = strlen($a = '1234567890')-1, $b = $a{rand(0,$z)}, $i = 1; $i !
 			$price
 		));
 
+        unset($_SESSION['codeprice']['nextcloud']);
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 		

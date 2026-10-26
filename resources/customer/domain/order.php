@@ -52,6 +52,16 @@ if(isset($_POST['orderDomain'])){
 
     $domain_name = $_POST['domain'];
     $domain_endung = $_POST['endung'];
+
+    if (!isset($buyprice)) {
+        $_SESSION['error_msg'] = 'Diese Domain-Endung ist nicht verfügbar';
+        die(header('Location: '.env('URL').'manage/domains'));
+    }
+
+    if (!$user->tryRemoveMoney($buyprice, $userid)) {
+        $_SESSION['error_msg'] = 'Dein Guthaben reicht nicht aus';
+        die(header('Location: '.env('URL').'manage/domains'));
+    }
         
     $SQL = $db->prepare("INSERT INTO `domains` (
 		`user_id`,
@@ -65,7 +75,6 @@ if(isset($_POST['orderDomain'])){
 
     $SQL->execute(array($userid, $domain_name, $domain_endung, $state, $expire_at, $buyprice));
 
-    $user->removeMoney($buyprice, $userid);
     $user->addTransaction($userid,'-'.$buyprice, $domain_name.' Bestellung (Domain)');
 		
     $discord->callWebhook('<@&874784920332017715> Soeben wurde eine Domain bestellt von '.$username);

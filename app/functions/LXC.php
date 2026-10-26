@@ -311,7 +311,10 @@ class LXC extends Controller {
         }
 
 //        return $ssh->exec('./lxc-exec '.$vm_id.' '.$command);
-        return $ssh->exec('pct exec '.$vm_id.' /bin/sh -- -c "'.$command.'"');
+        // Der Befehl wird base64-kodiert uebergeben, damit die Root-Shell des Hosts
+        // keine Nutzerzeichen (", $(), Backticks) interpretiert; er laeuft nur im Container.
+        $encoded = base64_encode((string) $command);
+        return $ssh->exec('pct exec '.(int) $vm_id.' -- /bin/sh -c "$(echo '.$encoded.' | base64 -d)"');
     }
 
 }

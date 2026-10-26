@@ -1,5 +1,9 @@
 <?php
 
+if($userid != $serverInfos['user_id']){
+    die(header('Location: '.$helper->url().'manage/rootserver'));
+}
+
 if(!($serverInfos['deleted_at'] == NULL)){
     header('Location: '.$helper->url().'order/rootserver');
     die();
@@ -63,10 +67,6 @@ if($serverInfos['state'] == 'SUSPENDED'){
     die(header('Location: '.$helper->url().'renew/rootserver/'.$id));
 } else {
     $suspended = false;
-}
-
-if($userid != $serverInfos['user_id']){
-    die(header('Location: '.$helper->url().'manage/rootserver'));
 }
 
 $status = $kvm->getStatus($serverInfos['node_id'], $serverInfos['id']);

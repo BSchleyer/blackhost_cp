@@ -1,5 +1,9 @@
 <?php
 
+if($userid != $serverInfos['user_id']){
+    die(header('Location: '.$helper->url().'manage/rootserver'));
+}
+
 if(!($serverInfos['deleted_at'] == NULL)){
     header('Location: '.$helper->url().'order/rootserver');
     die();
@@ -63,10 +67,6 @@ if($serverInfos['state'] == 'SUSPENDED'){
     die(header('Location: '.$helper->url().'renew/rootserver/'.$id));
 } else {
     $suspended = false;
-}
-
-if($userid != $serverInfos['user_id']){
-    die(header('Location: '.$helper->url().'manage/rootserver'));
 }
 
 $venocix_id = json_decode($serverInfos['venocix_id']);
@@ -173,7 +173,7 @@ if(isset($_POST['saveRDNS'])){
         $error = 'Es wurde kein rDNS eintrag gefunden';
     }
 
-    if(!filter_var($_POST['rdns'], FILTER_VALIDATE_DOMAIN)) {
+    if(!filter_var($_POST['rdns'], FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
         $error = 'rDNS Eintgrag ist ungültig';
     }
 

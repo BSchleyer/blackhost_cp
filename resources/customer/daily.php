@@ -4,6 +4,11 @@ include BASE_PATH . 'app/controller/PageController.php';
 
 $daily = "0.05";
 
+// Pro Nutzer serialisieren, damit parallele Requests nicht mehrfach einloesen
+$lockName = 'daily_'.md5((string) $userid);
+$lockSQL = $db->prepare("SELECT GET_LOCK(:name, 10)");
+$lockSQL->execute(array(":name" => $lockName));
+
 $SQL = $db->prepare("SELECT * FROM `daily_rew` WHERE `userid` = :user_id AND `state` = 'NO'");
 $SQL->execute(array(":user_id" => $userid));
 
@@ -36,6 +41,9 @@ if (isset($_POST['claimDaily'])) {
 
 
 }
+
+$unlockSQL = $db->prepare("SELECT RELEASE_LOCK(:name)");
+$unlockSQL->execute(array(":name" => $lockName));
 ?>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="d-flex flex-column-fluid">

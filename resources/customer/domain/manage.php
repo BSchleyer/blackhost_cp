@@ -3,7 +3,7 @@
 $currPage = 'back_Domain Verwaltung';
 include BASE_PATH.'app/controller/PageController.php';
 
-$siteid = $helper->protect($_GET['id']);
+$siteid = (int) $_GET['id'];
 
                 $SQL = $db->prepare("SELECT * FROM `domains` WHERE `user_id` = :user_id AND `id` = :siteid AND `state` = 'active'");
                 $SQL->execute(array(":user_id" => $userid, ":siteid" => $siteid));
@@ -14,7 +14,7 @@ $siteid = $helper->protect($_GET['id']);
 // CREATE DNS
 //
 
-    if(isset($_POST['changeDNS'])){
+    if(isset($_POST['changeDNS']) && !empty($row['zone_id']) && in_array($_POST['record_type'] ?? '', array('A','AAAA','CNAME','MX','TXT','NS','SRV','CAA'), true)){
 
 
 $ch = curl_init();
@@ -37,10 +37,10 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 
 $json_array = [
   'value' => $_POST['record_value'],
-  'ttl' => $_POST['record_ttl'],
+  'ttl' => max(60, (int) $_POST['record_ttl']),
   'type' => $_POST['record_type'],
   'name' => $_POST['record_name'],
-  'zone_id' => $_POST['record_zoneid']
+  'zone_id' => $row['zone_id']
 ]; 
 $body = json_encode($json_array);
 
@@ -68,8 +68,8 @@ curl_close($ch);
     if(isset($_POST['deleteDNS'])){
 
         
-        $SQLDNS = $db->prepare("DELETE FROM `domain_dns` WHERE `id` = :id");
-        $SQLDNS->execute(array(":id" => $_POST['entryid']));
+        $SQLDNS = $db->prepare("DELETE FROM `domain_dns` WHERE `id` = :id AND `domain_id` = :domain_id");
+        $SQLDNS->execute(array(":id" => $_POST['entryid'], ":domain_id" => $siteid));
         
         curl_close($ch);
         
@@ -172,8 +172,8 @@ $zoneid = $row['zone_id'];
 
 
                         <?php
-                $SQL = $db->prepare("SELECT * FROM `domain_dns` WHERE $siteid = `domain_id`");
-                $SQL->execute();
+                $SQL = $db->prepare("SELECT * FROM `domain_dns` WHERE :siteid = `domain_id`");
+                $SQL->execute(array(":siteid" => $siteid));
                 if ($SQL->rowCount() != 0) {
                 while ($dns = $SQL -> fetch(PDO::FETCH_ASSOC)){ ?>
 

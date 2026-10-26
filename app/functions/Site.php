@@ -21,6 +21,24 @@ class Site extends Controller
         return $response['price'];
     }
 
+    /**
+     * Server-side product discount (fraction, e.g. 0.1) from `produkt_rabatt`; mirrors the value shown on the order pages.
+     */
+    public function getProduktRabatt($produkt)
+    {
+        $SQL = self::db()->prepare("SELECT * FROM `produkt_rabatt` WHERE `produkt` = :produkt");
+        $SQL->execute(array(":produkt" => $produkt));
+
+        $rabatt = 0;
+        while ($row = $SQL->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['rabatt'] !== "0") {
+                $rabatt = (float)("0." . $row['rabatt']);
+            }
+        }
+
+        return max(0, min(1, $rabatt));
+    }
+
     public function getProductDiscount($product_id, $data)
     {
         $SQL = self::db()->prepare('SELECT * FROM `product_discounts` WHERE `product_id` = :product_id');

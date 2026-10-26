@@ -46,20 +46,26 @@ if(isset($_POST['order'])){
     $memory = $_POST['memory'];
     $disk = $_POST['disk'];
 	$backups = $_POST['backups'];
-	$mainrabatt_script = $_POST['mainrabatt_script'];
+	$mainrabatt_script = $site->getProduktRabatt('sinusbot');
     $password_sb = $_POST['password_sb']; 
 
+
+    if(!$site->productOptionEntrieExist('40', $cpu) || !$site->productOptionEntrieExist('41', $memory)
+        || !$site->productOptionEntrieExist('22', $disk) || !$site->productOptionEntrieExist('23', $backups)){
+        $error = 'Ungültige Produktoption';
+    }
 
     $db_price = $site->getProductOptionEntrie('40', $cpu,'price')
         +$site->getProductOptionEntrie('41', $memory,'price')
         +$site->getProductOptionEntrie('23', $backups,'price')
         +$site->getProductOptionEntrie('22', $disk,'price');
 	$pricere1 = $db_price * $validate->getIntervalFactor($runtime) * $mainrabatt_script;
-    $price = $db_price * $validate->getIntervalFactor($runtime) - $pricere1 - $_POST['codeprice'];
+    $codeprice = isset($_SESSION['codeprice']['sinusbot']) ? max(0, (float)$_SESSION['codeprice']['sinusbot']) : 0;
+    $price = $db_price * $validate->getIntervalFactor($runtime) - $pricere1 - $codeprice;
 	
-    $price = number_format($price,2);
+    $price = round($price,2);
 
-    if($price < $_POST['codeprice']){
+    if($price < $codeprice){
         $error = 'Der Gutscheincode entspricht einem zu hohen Wert';
         $_SESSION['error_msg'] = 'Der Gutscheincode entspricht einem zu hohen Wert';
         header('Location: '.env('URL').'dashboard');
@@ -141,6 +147,7 @@ $response = $pterodactyl->createSINUS('SinusBot Instanz', $user->getDataById($us
 		include BASE_PATH.'app/manager/customer/gameserver/functions/createMC.php';
 		sleep(4);
 
+        unset($_SESSION['codeprice']['sinusbot']);
         $user->removeMoney($price, $userid);
         $user->addTransaction($userid,'-'.$price,$proname.' Bestellung');
 		

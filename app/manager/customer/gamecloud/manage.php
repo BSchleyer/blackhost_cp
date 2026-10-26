@@ -64,14 +64,22 @@
 
     if(isset($_POST['delServ'])){
 
-        $pterodactyl->delete($_POST['wisp_id']);
-
         $wisp_id = $_POST['wisp_id'];
-    
-        $SQLDEL = $db -> prepare("DELETE FROM `gamecloud_server` WHERE `wisp_id` = :wisp_id");
-        $SQLDEL->execute(array(":wisp_id" => $wisp_id));
 
-        $_SESSION['success_msg'] = 'Die Instanz wurde erfolgreich gelöscht.';
+        // the instance must belong to this (user-owned) cloud
+        $SQLOWN = $db->prepare("SELECT `id` FROM `gamecloud_server` WHERE `wisp_id` = :wisp_id AND `cloud_id` = :cloud_id");
+        $SQLOWN->execute(array(":wisp_id" => $wisp_id, ":cloud_id" => $id));
+
+        if($SQLOWN->rowCount() == 1){
+            $pterodactyl->delete($wisp_id);
+
+            $SQLDEL = $db -> prepare("DELETE FROM `gamecloud_server` WHERE `wisp_id` = :wisp_id AND `cloud_id` = :cloud_id");
+            $SQLDEL->execute(array(":wisp_id" => $wisp_id, ":cloud_id" => $id));
+
+            $_SESSION['success_msg'] = 'Die Instanz wurde erfolgreich gelöscht.';
+        } else {
+            $_SESSION['error_msg'] = 'Instanz nicht gefunden.';
+        }
         header('Location: '.env('URL').'manage/gamecloud/'.$id);
 
     }

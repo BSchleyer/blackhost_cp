@@ -32,12 +32,12 @@ include BASE_PATH.'app/manager/customer/auth/register.php';
 
                         <div class="form-group">
                             <label class="font-size-h6 font-weight-bolder">Benutzername</label>
-                            <input value="<?= $_POST['username']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="username" autocomplete="off" />
+                            <input value="<?= htmlspecialchars($_POST['username'], ENT_QUOTES, "UTF-8"); ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="username" autocomplete="off" />
                         </div>
 
                         <div class="form-group">
                             <label class="font-size-h6 font-weight-bolder">E-Mail</label>
-                            <input value="<?= $_POST['email']; ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="email" autocomplete="off" />
+                            <input value="<?= htmlspecialchars($_POST['email'], ENT_QUOTES, "UTF-8"); ?>" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0 text-white" type="text" name="email" autocomplete="off" />
                         </div>
 
                         <div class="form-group">

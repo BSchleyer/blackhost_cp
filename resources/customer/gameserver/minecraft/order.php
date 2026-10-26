@@ -75,7 +75,7 @@ if (isset($_POST['useCode'])) {
     while ($row = $SQL->fetch(PDO::FETCH_ASSOC)) {
 
         if ($codeerror == false) {
-            $codeprice = $row['amount'];
+            $codeprice = $row['amount']; $_SESSION['codeprice']['gameserver'] = $codeprice;
         }
 
 
@@ -87,10 +87,10 @@ if (isset($_POST['useCode'])) {
             if ($row['code'] == $code) {
 
 
-                $SQL3 = $db->prepare("UPDATE `gameserver_codes` SET `useable` = :newcode WHERE `id` = :codeid");
+                $SQL3 = $db->prepare("UPDATE `gameserver_codes` SET `useable` = `useable` - 1 WHERE `id` = :codeid AND `useable` > 0");
                 $codeid = $row['id'];
-                $newcode = $row['useable'] - 1;
-                $SQL3->execute(array(":codeid" => $codeid, ":newcode" => $newcode));
+                $SQL3->execute(array(":codeid" => $codeid));
+                if($SQL3->rowCount() != 1){ unset($_SESSION['codeprice']['gameserver']); echo sendError('Der Code wurde bereits zu oft verwendet.'); continue; }
 
                 echo sendSuccess('Der Code wird auf der nächsten Bestellung angewendet.');
 

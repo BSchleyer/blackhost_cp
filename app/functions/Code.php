@@ -33,24 +33,48 @@ class Code extends Controller
     }
 
     public function useCode($code, $user_id) {
-        $data = self::getCode($code);
+        $db = self::db();
 
-        $code_amount = $data['amount'];
+        try {
+            $db->beginTransaction();
 
-        if($this->codeUsage($code) != 0) {
-            User::addMoney($code_amount, $user_id);
-            User::addTransaction($user_id, $code_amount, 'Gutschein eingelöst');
+            // lock the code row so concurrent redemptions are serialized
+            $SQL = $db->prepare("SELECT * FROM `codes` WHERE `code` = :code FOR UPDATE");
+            $SQL->execute(array(":code" => $code));
+            $data = $SQL->fetch(PDO::FETCH_ASSOC);
 
-            $SQL = self::db()->prepare("INSERT INTO `code_used` (`code`, `user_id`) VALUES (:code, :user_id)");
+            if(!$data || $data['useable'] <= 0){
+                $db->rollBack();
+                return false;
+            }
+
+            $SQL = $db->prepare("SELECT COUNT(*) FROM `code_used` WHERE `code` = :code AND `user_id` = :user_id");
+            $SQL->execute(array(":code" => $code, ":user_id" => $user_id));
+            if($SQL->fetchColumn() > 0){
+                $db->rollBack();
+                return false;
+            }
+
+            $SQL = $db->prepare("UPDATE `users` SET `amount` = `amount` + :amount WHERE `id` = :user_id");
+            $SQL->execute(array(":amount" => $data['amount'], ":user_id" => $user_id));
+
+            $SQL = $db->prepare("INSERT INTO `user_transactions`(`user_id`, `amount`, `desc`) VALUES (?,?,?)");
+            $SQL->execute(array($user_id, $data['amount'], 'Gutschein eingelöst'));
+
+            $SQL = $db->prepare("INSERT INTO `code_used` (`code`, `user_id`) VALUES (:code, :user_id)");
             $SQL->execute(array(":code" => $code, ":user_id" => $user_id));
 
-            $SQL1 = self::db()->prepare("UPDATE `codes` SET `useable` = :useable WHERE `code` = :code");
-            $SQL1->execute(array(":useable" => $data['usable'] - 1, ":code" => $code));
+            $SQL = $db->prepare("UPDATE `codes` SET `useable` = `useable` - 1 WHERE `code` = :code");
+            $SQL->execute(array(":code" => $code));
 
+            $db->commit();
             return true;
+        } catch (Exception $e) {
+            if($db->inTransaction()){
+                $db->rollBack();
+            }
+            return false;
         }
-
-        return false;
     }
 
 }

@@ -34,7 +34,7 @@ include BASE_PATH.'app/manager/customer/teamspeak/renew.php';
 
                                 <div class="mt-10"></div>
 
-                                <input name="voucher" hidden value="<?= $_POST['voucher']; ?>">
+                                <input name="voucher" hidden value="<?= htmlspecialchars($_POST['voucher'], ENT_QUOTES, "UTF-8"); ?>">
                                 <button type="submit" class="btn btn-outline-primary font-weight-bolder" name="renew"><i class="fas fa-history"></i> Kostenpflichtig verlängern</button>
                             </form>
 

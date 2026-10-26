@@ -172,7 +172,7 @@ if(isset($_POST['addNewIP'])){
                                             <td><?= $product; ?></td>
                                             <td><?= $row['node_id']; ?></td>
                                             <td><?= $row['ip']; ?></td>
-                                            <td><?= $row['rdns']; ?></td>
+                                            <td><?= htmlspecialchars((string) $row['rdns'], ENT_QUOTES, 'UTF-8'); ?></td>
                                             <td><?= $traffic_in; ?></td>
                                             <td><?= $traffic_out; ?></td>
                                             <td>

@@ -4,6 +4,30 @@ $pterodactyl = new Pterodactyl();
 class Pterodactyl extends Controller
 {
 
+    /**
+     * Rejects non-numeric, negative or zero (= unlimited) resource limits.
+     */
+    private function assertLimits(array $limits, array $feature_limits)
+    {
+        foreach (['memory', 'disk', 'cpu'] as $key) {
+            if (!isset($limits[$key]) || !ctype_digit((string) $limits[$key]) || (int) $limits[$key] < 1) {
+                throw new \InvalidArgumentException('Invalid resource limit: ' . $key);
+            }
+        }
+        foreach (['databases', 'backups'] as $key) {
+            if (isset($feature_limits[$key]) && !ctype_digit((string) $feature_limits[$key])) {
+                throw new \InvalidArgumentException('Invalid feature limit: ' . $key);
+            }
+        }
+    }
+
+    private function assertVersion($version_build)
+    {
+        if (!is_string($version_build) || !preg_match('/^[0-9A-Za-z._-]{1,32}$/', $version_build)) {
+            throw new \InvalidArgumentException('Invalid version');
+        }
+    }
+
     public function createUser($external_id, $username, $email, $first_name, $last_name, $password, $language = 'en')
     {
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
@@ -26,6 +50,8 @@ class Pterodactyl extends Controller
 
     public function create($name, $user, $egg_id, array $limits, array $feature_limits, $version_build)
     {
+        $this->assertLimits($limits, $feature_limits);
+        $this->assertVersion($version_build);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         $egg = $pterodactyl->egg(2, $egg_id);
@@ -61,6 +87,9 @@ class Pterodactyl extends Controller
 
     public function createCURSE($name, $user, $egg_id, array $limits, array $feature_limits, $version_build, $modpack)
     {
+        $this->assertLimits($limits, $feature_limits);
+        $this->assertVersion($version_build);
+        $this->assertVersion($modpack);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         $egg = $pterodactyl->egg(2, $egg_id);
@@ -96,6 +125,7 @@ class Pterodactyl extends Controller
 
     public function createTS($name, $user, $egg_id, array $limits, array $feature_limits)
     {
+        $this->assertLimits($limits, $feature_limits);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         $egg = $pterodactyl->egg(8, $egg_id);
@@ -131,6 +161,7 @@ class Pterodactyl extends Controller
 
     public function createSINUS($name, $user, $password, array $limits, array $feature_limits)
     {
+        $this->assertLimits($limits, $feature_limits);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         $egg = $pterodactyl->egg(44, 449);
@@ -163,6 +194,7 @@ class Pterodactyl extends Controller
 
     public function createCSGO($name, $user, $egg_id, array $limits, array $feature_limits)
     {
+        $this->assertLimits($limits, $feature_limits);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         $egg = $pterodactyl->egg(0, $egg_id);
@@ -209,6 +241,7 @@ class Pterodactyl extends Controller
 
     public function updateBuild($serverId, array $limits, array $feature_limits, $allocation_id)
     {
+        $this->assertLimits($limits, $feature_limits);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
 //        $pterodactyl->updateServerDetails()
@@ -229,6 +262,7 @@ class Pterodactyl extends Controller
 
     public function updateServer($serverId, array $limits, array $feature_limits, $allocation_id)
     {
+        $this->assertLimits($limits, $feature_limits);
         $pterodactyl = new \HCGCloud\Pterodactyl\Pterodactyl(env('PTERODACTYL_API_KEY'), env('PTERODACTYL_BASE_URL'));
 
         try {
